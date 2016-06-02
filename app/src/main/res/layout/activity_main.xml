@@ -1,17 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://robobinding.org/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="app.df.gank.io.ganhuo.MainActivity">
+    tools:context=".ui.activity.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"/>
-</RelativeLayout>
+    <com.aspsine.swipetoloadlayout.SwipeToLoadLayout
+        android:id="@+id/main_swipe_load_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        bind:loadingMore="{loadingMore}"
+        bind:refreshing="{refreshing}">
+
+        <include
+            android:id="@id/swipe_refresh_header"
+            layout="@layout/swipe_refresh_header_layout"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@id/swipe_target"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            bind:itemLayout="[@layout/home_item_layout]"
+            bind:source="{homeRecyclerSource}"/>
+
+        <include
+            android:id="@id/swipe_load_more_footer"
+            layout="@layout/swipe_refresh_footer_layout"/>
+    </com.aspsine.swipetoloadlayout.SwipeToLoadLayout>
+
+
+</LinearLayout>
