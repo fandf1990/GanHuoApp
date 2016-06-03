@@ -21,14 +21,14 @@
                                                  android:layout_width="20dp"
                                                  android:layout_height="20dp"
                                                  android:layout_centerVertical="true"
-                                                 android:layout_marginRight="20dp"
+                                                 android:layout_marginRight="15dp"
                                                  android:layout_toLeftOf="@+id/swipe_refresh_header_tv"
                                                  app:indicator="LineScale"
                                                  app:indicator_color="@color/color_999999"/>
 
             <TextView
                 android:id="@+id/swipe_refresh_header_tv"
-                android:layout_width="150dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:gravity="center"
