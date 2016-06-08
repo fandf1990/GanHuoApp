@@ -55,4 +55,11 @@ public class BaseActivity extends AppCompatActivity {
     protected void setToolBarTitle(Toolbar bar){
 
     }
+
+    protected void showNavigationButton(){
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
+    }
 }

@@ -18,12 +18,12 @@
 
             <com.wang.avi.AVLoadingIndicatorView xmlns:app="http://schemas.android.com/apk/res-auto"
                                                  android:id="@+id/progressbar"
-                                                 android:layout_width="20dp"
-                                                 android:layout_height="20dp"
+                                                 android:layout_width="25dp"
+                                                 android:layout_height="25dp"
                                                  android:layout_centerVertical="true"
                                                  android:layout_marginRight="15dp"
                                                  android:layout_toLeftOf="@+id/swipe_refresh_header_tv"
-                                                 app:indicator="LineScale"
+                                                 app:indicator="LineSpinFadeLoader"
                                                  app:indicator_color="@color/color_999999"/>
 
             <TextView

@@ -1,5 +1,7 @@
 package io.gank.feng24k.app.model.presentation.main;
 
+import android.content.Intent;
+
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.jiongbull.jlog.JLog;
@@ -16,6 +18,8 @@ import io.gank.feng24k.app.model.entity.BenefitEntity;
 import io.gank.feng24k.app.model.entity.base.HttpResult;
 import io.gank.feng24k.app.model.itemModel.HomeItemPresentationModel;
 import io.gank.feng24k.app.model.presentation.BasePresentationModel;
+import io.gank.feng24k.app.ui.activity.MainActivity;
+import io.gank.feng24k.app.ui.activity.PhotoViewActivity;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -27,6 +31,12 @@ public class MainPresentationModel extends BasePresentationModel implements OnRe
     private List<BenefitEntity> mRecyclerSource = new ArrayList<>();
     private boolean refreshing, loadingMore;
     private int mPageIndex = 1;
+    private MainActivity mActivity;
+
+
+    public MainPresentationModel(MainActivity activity) {
+        this.mActivity = activity;
+    }
 
     public void autoLoadBenefit() {
         refreshing = true;
@@ -65,11 +75,21 @@ public class MainPresentationModel extends BasePresentationModel implements OnRe
     }
 
 
-    @ItemPresentationModel(value = HomeItemPresentationModel.class)
+    @ItemPresentationModel(value = HomeItemPresentationModel.class ,factoryMethod = "createHomeItemPresentationModel")
     public List<BenefitEntity> getHomeRecyclerSource() {
         return mRecyclerSource;
     }
 
+
+    public HomeItemPresentationModel createHomeItemPresentationModel() {
+        return new HomeItemPresentationModel(this);
+    }
+
+    public void itemOnClick(int position, BenefitEntity entity) {
+        Intent intent = new Intent(mActivity, PhotoViewActivity.class);
+        intent.putExtra(PhotoViewActivity.INTENT_PHOTOVIEW_PHOTO_CODE, entity);
+        mActivity.startActivity(intent);
+    }
 
     public boolean getRefreshing() {
         return refreshing;

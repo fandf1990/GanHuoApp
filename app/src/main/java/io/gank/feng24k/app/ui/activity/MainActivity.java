@@ -2,8 +2,8 @@ package io.gank.feng24k.app.ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
 
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
@@ -31,10 +31,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mMainPresentationModel = new MainPresentationModel();
+        mMainPresentationModel = new MainPresentationModel(this);
         setContentView(R.layout.activity_main, mMainPresentationModel);
         mRecyclerView = (RecyclerView) findViewById(R.id.swipe_target);
-        mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        mRecyclerView.setLayoutManager(new GridLayoutManager(this,2));
         mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.main_swipe_load_layout);
         mSwipeToLoadLayout.setOnRefreshListener(mMainPresentationModel);
         mSwipeToLoadLayout.setOnLoadMoreListener(mMainPresentationModel);
