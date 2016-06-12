@@ -4,11 +4,15 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.ViewGroup;
 
+import com.ogaclejapan.smarttablayout.SmartTabLayout;
+
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +29,7 @@ public class MainActivity extends BaseActivity {
     private ViewPager mViewPager;
     private CategoryPagerAdapter mCategoryPagerAdapter;
     private List<Fragment> mFragmentList = new ArrayList<>();
+    private SmartTabLayout mSmartTabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class MainActivity extends BaseActivity {
     protected void initView() {
         super.initView();
         mViewPager = (ViewPager) findViewById(R.id.main_viewpager);
+        mSmartTabLayout = (SmartTabLayout) findViewById(R.id.main_viewpager_tab_layout);
         mFragmentList.add(CategoryFragment.newInstance("福利"));
         mFragmentList.add(CategoryFragment.newInstance("福利"));
         mFragmentList.add(CategoryFragment.newInstance("福利"));
@@ -44,21 +50,26 @@ public class MainActivity extends BaseActivity {
 
         mCategoryPagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mCategoryPagerAdapter);
+
+        mSmartTabLayout.setViewPager(mViewPager);
     }
 
     @Override
     protected void setToolBarTitle(Toolbar bar) {
         super.setToolBarTitle(bar);
-        bar.setTitle("Gank.io福利");
+        bar.setTitle("Gank.io");
         bar.setTitleTextColor(Color.WHITE);
     }
 
 
-    private class CategoryPagerAdapter extends FragmentStatePagerAdapter {
+    private class CategoryPagerAdapter extends FragmentPagerAdapter {
+
+        private  SparseArrayCompat<WeakReference<Fragment>> holder;
 
 
         public CategoryPagerAdapter(FragmentManager fm) {
             super(fm);
+            this.holder = new SparseArrayCompat<>(mFragmentList.size());
         }
 
         @Override
@@ -71,18 +82,28 @@ public class MainActivity extends BaseActivity {
             return mFragmentList.size();
         }
 
-        @Override
-        public Object instantiateItem(ViewGroup arg0, int arg1) {
 
-            return super.instantiateItem(arg0, arg1);
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Object item = super.instantiateItem(container, position);
+            if (item instanceof Fragment) {
+                holder.put(position, new WeakReference<Fragment>((Fragment) item));
+            }
+            return item;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-
+            holder.remove(position);
             super.destroyItem(container, position, object);
         }
 
+
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mCategoryArrays[position];
+        }
     }
 
 
