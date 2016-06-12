@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/titlebar_search"
+        android:orderInCategory="1"
+        android:title="search"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/titlebar_collect"
+        android:orderInCategory="1"
+        android:title="copy"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/titlebar_setting"
+        android:orderInCategory="1"
+        android:title="setting"
+        app:showAsAction="never" />
+</menu>
