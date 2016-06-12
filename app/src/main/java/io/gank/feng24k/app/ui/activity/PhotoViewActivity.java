@@ -30,6 +30,12 @@ public class PhotoViewActivity extends BaseActivity {
         mBenefitEntity = getIntent().getParcelableExtra(INTENT_PHOTOVIEW_PHOTO_CODE);
         mPhotoViewPrestationModel = new PhotoViewPrestationModel(mBenefitEntity);
         setContentView(R.layout.photo_view_activity, mPhotoViewPrestationModel);
+
+    }
+
+    @Override
+    protected void initView() {
+        super.initView();
         showNavigationButton();
     }
 

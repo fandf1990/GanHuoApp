@@ -1,28 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ua.com.crosp.solutions.library.presenterlayout.layout.PresenterLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/presenter_layout_main"
+<com.kennyc.view.MultiStateView xmlns:android="http://schemas.android.com/apk/res/android"
+                                xmlns:app="http://schemas.android.com/apk/res-auto"
+                                android:id="@+id/multiview_layout_main"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:msv_errorView="@layout/view_overlapping_error_view"
+                                app:msv_emptyView="@layout/view_overlapping_empty_view"
+                                app:msv_loadingView="@layout/view_overlapping_loading_view"
+                                app:msv_viewState="content"
+                                app:msv_animateViewChanges="true">
+
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorPrimary"
+            android:elevation="0dp"></android.support.v7.widget.Toolbar>
 
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-           android:orientation="vertical">
-           <android.support.v7.widget.Toolbar
-               android:id="@+id/toolbar"
-               android:elevation="0dp"
-               android:layout_width="match_parent"
-               android:background="@color/colorPrimary"
-               android:layout_height="?attr/actionBarSize"></android.support.v7.widget.Toolbar>
-
-
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:orientation="vertical"
-               android:id="@+id/base_activity_parent_layout"/>
-       </LinearLayout>
-
-    </ua.com.crosp.solutions.library.presenterlayout.layout.PresenterLayout>
+        <LinearLayout
+            android:id="@+id/base_activity_parent_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"/>
+    </LinearLayout>
+    </com.kennyc.view.MultiStateView>

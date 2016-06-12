@@ -12,8 +12,7 @@ import rx.Observable;
 public interface CategoryService {
 
 
-    @GET("data/福利/{pageSize}/{pageIndex}")
-    public Observable<HttpResult<List<BenefitEntity>>> getBenefitData(@Path("pageSize")int pageSize, @Path("pageIndex")int pageIndex);
-
-
+    @GET("data/{category}/{pageSize}/{pageIndex}")
+    public Observable<HttpResult<List<BenefitEntity>>> getBenefitData(@Path("category")String category
+            ,@Path("pageSize")int pageSize, @Path("pageIndex")int pageIndex);
 }

@@ -9,11 +9,15 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
+import com.kennyc.view.MultiStateView;
+
 import org.robobinding.binder.BinderFactoryBuilder;
 
 import io.gank.feng24k.app.R;
 
 public class BaseActivity extends AppCompatActivity {
+
+    protected MultiStateView mMultiStateView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -22,44 +26,55 @@ public class BaseActivity extends AppCompatActivity {
 
     public void setContentView(int layoutId, Object presentationModel) {
         FrameLayout rootView = (FrameLayout) getLayoutInflater()
-                .inflate(R.layout.base_activity_layout,null);
-        addChildView(rootView, layoutId,presentationModel);
+                .inflate(R.layout.base_activity_layout, null);
+        addChildView(rootView, layoutId, presentationModel);
         setContentView(rootView);
+        initView();
+    }
+
+    protected void initView() {
+        mMultiStateView = (MultiStateView) findViewById(R.id.multiview_layout_main);
     }
 
 
-    private void addChildView(View rootView,int layoutId, Object presentationModel){
+    private void addChildView(View rootView, int layoutId, Object presentationModel) {
         BinderFactoryBuilder builder = new BinderFactoryBuilder();
         preBindView(builder);
         View childView;
-        if(presentationModel!=null){
+        if (presentationModel != null) {
             childView = builder.build().createViewBinder(this).inflateAndBind(layoutId, presentationModel);
             childView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(
                     android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
                     android.widget.LinearLayout.LayoutParams.MATCH_PARENT));
 
-        }else {
+        } else {
             childView = LayoutInflater.from(this).inflate(layoutId, null);
         }
-        ((LinearLayout)rootView
+        ((LinearLayout) rootView
                 .findViewById(R.id.base_activity_parent_layout)).addView(childView);
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         setToolBarTitle(toolbar);
         setSupportActionBar(toolbar);
     }
-    protected void preBindView(BinderFactoryBuilder builder){
+
+    protected void preBindView(BinderFactoryBuilder builder) {
 
     }
 
 
-    protected void setToolBarTitle(Toolbar bar){
+    protected void setToolBarTitle(Toolbar bar) {
 
     }
 
-    protected void showNavigationButton(){
-        if (getSupportActionBar() != null){
+    protected void showNavigationButton() {
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+    }
+
+
+    public void setMultiViewState(int state){
+        mMultiStateView.setViewState(state);
     }
 }

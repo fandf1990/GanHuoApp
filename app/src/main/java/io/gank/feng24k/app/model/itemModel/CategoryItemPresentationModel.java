@@ -4,16 +4,16 @@ package io.gank.feng24k.app.model.itemModel;
 import org.robobinding.itempresentationmodel.ItemContext;
 
 import io.gank.feng24k.app.model.entity.BenefitEntity;
-import io.gank.feng24k.app.model.presentation.main.MainPresentationModel;
+import io.gank.feng24k.app.model.presentation.main.CategoryPresentationModel;
 
-public class HomeItemPresentationModel implements org.robobinding.itempresentationmodel.ItemPresentationModel<BenefitEntity> {
+public class CategoryItemPresentationModel implements org.robobinding.itempresentationmodel.ItemPresentationModel<BenefitEntity> {
 
     private BenefitEntity mBenefitEntity;
     private int position = 0;
-    private MainPresentationModel mMainPresentationModel;
+    private CategoryPresentationModel mMainPresentationModel;
 
 
-    public HomeItemPresentationModel(MainPresentationModel model) {
+    public CategoryItemPresentationModel(CategoryPresentationModel model) {
         this.mMainPresentationModel = model;
     }
 
@@ -24,7 +24,7 @@ public class HomeItemPresentationModel implements org.robobinding.itempresentati
     }
 
     public String getWho() {
-        return mBenefitEntity.getWho();
+        return mBenefitEntity.getDesc();
     }
 
     public String getImageUrl() {

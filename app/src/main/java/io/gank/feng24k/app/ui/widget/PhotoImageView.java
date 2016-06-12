@@ -7,10 +7,9 @@ import android.util.AttributeSet;
 import com.bumptech.glide.Glide;
 
 import io.gank.feng24k.app.R;
-import uk.co.senab.photoview.PhotoView;
 
 
-public class PhotoImageView extends PhotoView {
+public class PhotoImageView extends TouchImageView {
     public PhotoImageView(Context context) {
         super(context);
     }
