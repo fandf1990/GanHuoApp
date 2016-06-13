@@ -31,4 +31,8 @@ public class BaseFragment extends Fragment{
     protected View findViewById(int viewId){
         return mView.findViewById(viewId);
     }
+
+    public void setMultiViewState(int states){
+        ((BaseActivity)getActivity()).setMultiViewState(states);
+    }
 }

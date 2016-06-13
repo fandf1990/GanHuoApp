@@ -4,16 +4,16 @@ package io.gank.feng24k.app.model.itemModel;
 import org.robobinding.itempresentationmodel.ItemContext;
 
 import io.gank.feng24k.app.model.entity.BenefitEntity;
-import io.gank.feng24k.app.model.presentation.main.CategoryPresentationModel;
+import io.gank.feng24k.app.model.presentation.main.FuLiPresentationModel;
 
-public class CategoryItemPresentationModel implements org.robobinding.itempresentationmodel.ItemPresentationModel<BenefitEntity> {
+public class FuLiItemPresentationModel implements org.robobinding.itempresentationmodel.ItemPresentationModel<BenefitEntity> {
 
     private BenefitEntity mBenefitEntity;
     private int position = 0;
-    private CategoryPresentationModel mMainPresentationModel;
+    private FuLiPresentationModel mMainPresentationModel;
 
 
-    public CategoryItemPresentationModel(CategoryPresentationModel model) {
+    public FuLiItemPresentationModel(FuLiPresentationModel model) {
         this.mMainPresentationModel = model;
     }
 

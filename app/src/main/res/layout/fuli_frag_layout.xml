@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        bind:itemLayout="[@layout/category_frag_item_layout]"
+        bind:itemLayout="[@layout/fuli_frag_item_layout]"
         bind:source="{homeRecyclerSource}"/>
 
     <include
