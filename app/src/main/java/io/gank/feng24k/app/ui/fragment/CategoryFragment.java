@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
+import com.jiongbull.jlog.JLog;
 
 import org.robobinding.binder.BinderFactoryBuilder;
 import org.robobinding.customviewbinding.CustomViewBinding;
@@ -32,6 +33,7 @@ public class CategoryFragment extends BaseFragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        JLog.d("onViewCreated");
         mCategoryType = getArguments().getString(FRAGMENT_CATEGORYTYPE_CODE);
         mRecyclerView = (RecyclerView) findViewById(R.id.swipe_target);
         mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.main_swipe_load_layout);

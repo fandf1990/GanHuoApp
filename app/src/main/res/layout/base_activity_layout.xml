@@ -4,11 +4,11 @@
                                 android:id="@+id/multiview_layout_main"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                app:msv_errorView="@layout/view_overlapping_error_view"
+                                app:msv_animateViewChanges="true"
                                 app:msv_emptyView="@layout/view_overlapping_empty_view"
+                                app:msv_errorView="@layout/view_overlapping_error_view"
                                 app:msv_loadingView="@layout/view_overlapping_loading_view"
-                                app:msv_viewState="content"
-                                app:msv_animateViewChanges="true">
+                                app:msv_viewState="content">
 
 
     <LinearLayout
@@ -21,7 +21,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary"
-            android:elevation="0dp"></android.support.v7.widget.Toolbar>
+            android:elevation="0dp"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"></android.support.v7.widget.Toolbar>
 
 
         <LinearLayout
@@ -30,4 +32,4 @@
             android:layout_height="match_parent"
             android:orientation="vertical"/>
     </LinearLayout>
-    </com.kennyc.view.MultiStateView>
+</com.kennyc.view.MultiStateView>
