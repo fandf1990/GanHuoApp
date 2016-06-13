@@ -16,8 +16,8 @@ import io.gank.feng24k.app.ui.fragment.FuLiFragment;
 @PresentationModel
 public class FuLiPresentationModel extends CategoryPresentationModel  {
 
-    public FuLiPresentationModel(FuLiFragment fragment, String categoryType ) {
-        super(fragment,categoryType);
+    public FuLiPresentationModel(FuLiFragment fragment) {
+        super(fragment);
     }
 
 

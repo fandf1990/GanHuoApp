@@ -3,7 +3,6 @@ package io.gank.feng24k.app.model.presentation.main;
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.jiongbull.jlog.JLog;
-import com.kennyc.view.MultiStateView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,17 +21,17 @@ import rx.schedulers.Schedulers;
 public abstract class CategoryPresentationModel extends BasePresentationModel implements OnRefreshListener, OnLoadMoreListener {
 
     protected List<BenefitEntity> mRecyclerSource = new ArrayList<>();
-    private boolean refreshing, loadingMore;
-    private int mPageIndex = 1;
+    protected boolean refreshing, loadingMore;
+    protected int mPageIndex = 1;
     protected BaseFragment mCategoryFragment;
     protected String mCategoryType;
 
-    public CategoryPresentationModel(BaseFragment fragment, String categoryType) {
+    public CategoryPresentationModel(BaseFragment fragment) {
         this.mCategoryFragment = fragment;
-        this.mCategoryType = categoryType;
     }
 
-    public void autoLoadBenefit() {
+    public void autoLoadBenefit(String categoryType) {
+        this.mCategoryType = categoryType;
         refreshing = true;
         firePropertyChange("refreshing");
         getBenefitData();
@@ -59,7 +58,6 @@ public abstract class CategoryPresentationModel extends BasePresentationModel im
 
                     @Override
                     public void onNext(HttpResult<List<BenefitEntity>> listHttpResult) {
-                        mCategoryFragment.setMultiViewState(MultiStateView.VIEW_STATE_CONTENT);
                         if (mPageIndex == 1) {
                             refreshing = false;
                             firePropertyChange("refreshing");

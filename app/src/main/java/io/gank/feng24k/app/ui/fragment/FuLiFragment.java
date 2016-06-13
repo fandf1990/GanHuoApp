@@ -20,10 +20,11 @@ public class FuLiFragment extends CategoryFragment{
         return fragment;
     }
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mCategoryPresentationModel = new FuLiPresentationModel(this,mCategoryType);
-        return  createView(R.layout.fuli_frag_layout,mCategoryPresentationModel);
+        mCategoryPresentationModel = new FuLiPresentationModel(this);
+        return  createView(R.layout.category_frag_layout,mCategoryPresentationModel);
     }
 }

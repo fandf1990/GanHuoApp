@@ -8,7 +8,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.aspsine.swipetoloadlayout.SwipeToLoadLayout;
-import com.jiongbull.jlog.JLog;
 
 import org.robobinding.binder.BinderFactoryBuilder;
 import org.robobinding.customviewbinding.CustomViewBinding;
@@ -24,8 +23,8 @@ import io.gank.feng24k.app.ui.widget.binding.SwipeToLoadLayoutBinding;
 public class CategoryFragment extends BaseFragment{
 
     public static final String FRAGMENT_CATEGORYTYPE_CODE="categoryType";
-    private RecyclerView mRecyclerView;
-    private SwipeToLoadLayout mSwipeToLoadLayout;
+    protected RecyclerView mRecyclerView;
+    protected SwipeToLoadLayout mSwipeToLoadLayout;
     protected String mCategoryType;
     protected CategoryPresentationModel mCategoryPresentationModel;
 
@@ -33,7 +32,6 @@ public class CategoryFragment extends BaseFragment{
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        JLog.d("onViewCreated");
         mCategoryType = getArguments().getString(FRAGMENT_CATEGORYTYPE_CODE);
         mRecyclerView = (RecyclerView) findViewById(R.id.swipe_target);
         mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.main_swipe_load_layout);
@@ -43,7 +41,7 @@ public class CategoryFragment extends BaseFragment{
         mSwipeToLoadLayout.post(new Runnable() {
             @Override
             public void run() {
-                mCategoryPresentationModel.autoLoadBenefit();
+                mCategoryPresentationModel.autoLoadBenefit(mCategoryType);
             }
         });
     }
