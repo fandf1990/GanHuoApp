@@ -9,6 +9,8 @@
     <color name="error_view_text_dark">#CC000000</color>
     <color name="error_view_text_light">#858585</color>
     <color name="transparent">@android:color/transparent</color>
+    <color name="black">@android:color/black</color>
     <color name="error_view_retry_button_background">#30000000</color>
     <color name="error_view_retry_button_background_stroke">#50000000</color>
+    <color name="pressed_color">#F0F0F0</color>
 </resources>

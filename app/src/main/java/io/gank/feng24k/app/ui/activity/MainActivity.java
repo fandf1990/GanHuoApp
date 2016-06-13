@@ -20,13 +20,14 @@ import java.util.List;
 import io.gank.feng24k.app.R;
 import io.gank.feng24k.app.ui.base.BaseActivity;
 import io.gank.feng24k.app.ui.fragment.FuLiFragment;
+import io.gank.feng24k.app.ui.fragment.HistoryContentFragment;
 
 /**
  * 首页
  */
 public class MainActivity extends BaseActivity {
 
-    private final String[] mCategoryArrays = {"福利", "Android", "iOS", "休息视频", "拓展资源", "前端", "all"};
+    private final String[] mCategoryArrays = {"推荐","福利", "Android", "iOS", "休息视频", "拓展资源", "前端", "all"};
     private ViewPager mViewPager;
     private CategoryPagerAdapter mCategoryPagerAdapter;
     private List<Fragment> mFragmentList = new ArrayList<>();
@@ -43,7 +44,7 @@ public class MainActivity extends BaseActivity {
         super.initView();
         mViewPager = (ViewPager) findViewById(R.id.main_viewpager);
         mSmartTabLayout = (SmartTabLayout) findViewById(R.id.main_viewpager_tab_layout);
-        mFragmentList.add(FuLiFragment.newInstance("福利"));
+        mFragmentList.add(HistoryContentFragment.newInstance("推荐"));
         mFragmentList.add(FuLiFragment.newInstance("福利"));
         mFragmentList.add(FuLiFragment.newInstance("福利"));
         mFragmentList.add(FuLiFragment.newInstance("福利"));
