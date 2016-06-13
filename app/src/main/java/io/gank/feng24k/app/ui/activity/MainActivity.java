@@ -21,13 +21,14 @@ import io.gank.feng24k.app.R;
 import io.gank.feng24k.app.ui.base.BaseActivity;
 import io.gank.feng24k.app.ui.fragment.FuLiFragment;
 import io.gank.feng24k.app.ui.fragment.HistoryContentFragment;
+import io.gank.feng24k.app.ui.fragment.ResourceFragment;
 
 /**
  * 首页
  */
 public class MainActivity extends BaseActivity {
 
-    private final String[] mCategoryArrays = {"推荐","福利", "Android", "iOS", "休息视频", "拓展资源", "前端", "all"};
+    private final String[] mCategoryArrays = {"推荐", "Android", "iOS","福利", "休息视频", "拓展资源", "前端", "all"};
     private ViewPager mViewPager;
     private CategoryPagerAdapter mCategoryPagerAdapter;
     private List<Fragment> mFragmentList = new ArrayList<>();
@@ -45,10 +46,13 @@ public class MainActivity extends BaseActivity {
         mViewPager = (ViewPager) findViewById(R.id.main_viewpager);
         mSmartTabLayout = (SmartTabLayout) findViewById(R.id.main_viewpager_tab_layout);
         mFragmentList.add(HistoryContentFragment.newInstance("推荐"));
+        mFragmentList.add(ResourceFragment.newInstance("Android"));
+        mFragmentList.add(ResourceFragment.newInstance("iOS"));
         mFragmentList.add(FuLiFragment.newInstance("福利"));
-        mFragmentList.add(FuLiFragment.newInstance("福利"));
-        mFragmentList.add(FuLiFragment.newInstance("福利"));
-        mFragmentList.add(FuLiFragment.newInstance("福利"));
+        mFragmentList.add(ResourceFragment.newInstance("休息视频"));
+        mFragmentList.add(ResourceFragment.newInstance("拓展资源"));
+        mFragmentList.add(ResourceFragment.newInstance("前端"));
+        mFragmentList.add(ResourceFragment.newInstance("all"));
 
         mCategoryPagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mCategoryPagerAdapter);

@@ -13,7 +13,7 @@ import io.gank.feng24k.app.ui.base.BaseActivity;
 public class HistoryContentDetailActivity extends BaseActivity {
 
     public static final String INTENT_CONTENT_CODE = "intent_content_code";
-    private  String mContent;
+    private String mContent;
     private WebView mWebView;
 
     @Override
@@ -22,7 +22,11 @@ public class HistoryContentDetailActivity extends BaseActivity {
         mContent = getIntent().getStringExtra(INTENT_CONTENT_CODE);
         setContentView(R.layout.history_content_detail_activity, null);
         mWebView = (WebView) findViewById(R.id.history_content_detail_webview);
-        mWebView.loadDataWithBaseURL(null, mContent, "text/html", "UTF-8", null);
+        if (mContent.startsWith("http")) {
+            mWebView.loadUrl(mContent);
+        } else {
+            mWebView.loadDataWithBaseURL(null, mContent, "text/html", "UTF-8", null);
+        }
     }
 
     @Override

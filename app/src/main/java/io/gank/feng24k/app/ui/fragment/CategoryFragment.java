@@ -3,7 +3,6 @@ package io.gank.feng24k.app.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
@@ -35,7 +34,6 @@ public class CategoryFragment extends BaseFragment{
         mCategoryType = getArguments().getString(FRAGMENT_CATEGORYTYPE_CODE);
         mRecyclerView = (RecyclerView) findViewById(R.id.swipe_target);
         mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.main_swipe_load_layout);
-        mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(),2));
         mSwipeToLoadLayout.setOnRefreshListener(mCategoryPresentationModel);
         mSwipeToLoadLayout.setOnLoadMoreListener(mCategoryPresentationModel);
         mSwipeToLoadLayout.post(new Runnable() {

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://robobinding.org/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    card_view:cardBackgroundColor="@color/cardview_light_background"
+    card_view:cardCornerRadius="@dimen/cardview_cardCornerRadius">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/recommend_item_selector"
+        android:padding="10dp"
+        bind:onClick="itemOnClick">
+
+
+        <TextView
+            android:id="@+id/resource_frag_item_title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="获取特定日期获取特定日期网站数据:http://gank.io/api/history/content/day/2016/05/11"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            bind:text="{title}"/>
+
+        <TextView
+            android:id="@+id/resource_frag_item_author_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/resource_frag_item_title_tv"
+            android:layout_marginTop="10dp"
+            android:padding="3dp"
+            android:text="Author"
+            android:textColor="@color/black"
+            android:textSize="13sp"
+            bind:text="{author}"/>
+
+        <TextView
+            android:id="@+id/resource_frag_item_tag_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/resource_frag_item_author_tv"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/recommend_item_tag_bg"
+            android:padding="3dp"
+            android:text="ffffff"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            bind:text="{tag}"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/resource_frag_item_tag_tv"
+            android:layout_alignParentRight="true"
+            android:padding="3dp"
+            android:text="2016-02-13"
+            android:textSize="12sp"
+            bind:text="{time}"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>
