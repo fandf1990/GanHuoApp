@@ -5,16 +5,12 @@
     <item
         android:id="@+id/titlebar_search"
         android:orderInCategory="1"
-        android:title="search"
-        app:showAsAction="never" />
+        android:icon="@drawable/abc_ic_search_api_mtrl_alpha"
+        app:showAsAction="ifRoom" />
+
     <item
-        android:id="@+id/titlebar_collect"
+        android:id="@+id/titlebar_about"
         android:orderInCategory="1"
-        android:title="copy"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/titlebar_setting"
-        android:orderInCategory="1"
-        android:title="setting"
+        android:title="关于"
         app:showAsAction="never" />
 </menu>

@@ -92,7 +92,7 @@ public class RecommendPresentationModel extends BasePresentationModel implements
 
     public void itemOnClick(int position, RecommendInfo entity) {
         Intent intent = new Intent(mHistoryContentFragment.getActivity(), RecommendDetailActivity.class);
-        intent.putExtra(RecommendDetailActivity.INTENT_CONTENT_CODE, entity.getContent());
+        intent.putExtra(RecommendDetailActivity.INTENT_CONTENT_CODE, entity);
         mHistoryContentFragment.startActivity(intent);
     }
 

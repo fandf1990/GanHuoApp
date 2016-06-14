@@ -9,7 +9,7 @@ import java.util.List;
 
 import io.gank.feng24k.app.model.entity.BenefitEntity;
 import io.gank.feng24k.app.model.itemModel.ResourceItemPresentationModel;
-import io.gank.feng24k.app.ui.activity.RecommendDetailActivity;
+import io.gank.feng24k.app.ui.activity.ResourceDetailActivity;
 import io.gank.feng24k.app.ui.fragment.ResourceFragment;
 
 
@@ -33,8 +33,8 @@ public class ResourcePresentationModel extends CategoryPresentationModel {
     }
 
     public void itemOnClick(int position, BenefitEntity entity) {
-        Intent intent = new Intent(mCategoryFragment.getActivity(), RecommendDetailActivity.class);
-        intent.putExtra(RecommendDetailActivity.INTENT_CONTENT_CODE, entity.getUrl());
+        Intent intent = new Intent(mCategoryFragment.getActivity(), ResourceDetailActivity.class);
+        intent.putExtra(ResourceDetailActivity.INTENT_RESOURCE_DETAIL_CODE, entity.getUrl());
         mCategoryFragment.getActivity().startActivity(intent);
     }
 }

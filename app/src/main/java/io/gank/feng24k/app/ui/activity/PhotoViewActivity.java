@@ -4,7 +4,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.widget.ImageView;
 
 import org.robobinding.binder.BinderFactoryBuilder;
@@ -52,14 +51,5 @@ public class PhotoViewActivity extends BaseActivity {
         super.preBindView(builder);
         builder.add(new PhotoImageViewBinding().extend(PhotoImageView.class));
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
