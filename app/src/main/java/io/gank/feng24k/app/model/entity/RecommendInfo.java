@@ -80,6 +80,7 @@ public class RecommendInfo implements Parcelable {
         dest.writeString(this.content);
         dest.writeString(this.publishedAt);
         dest.writeString(this.photoUrl);
+        dest.writeTypedList(mRecommendItemInfos);
     }
 
     protected RecommendInfo(Parcel in) {
@@ -87,6 +88,7 @@ public class RecommendInfo implements Parcelable {
         this.content = in.readString();
         this.publishedAt = in.readString();
         this.photoUrl = in.readString();
+        this.mRecommendItemInfos = in.createTypedArrayList(RecommendItemInfo.CREATOR);
     }
 
     public static final Creator<RecommendInfo> CREATOR = new Creator<RecommendInfo>() {
