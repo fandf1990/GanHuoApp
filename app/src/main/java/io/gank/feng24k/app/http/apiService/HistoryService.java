@@ -2,7 +2,7 @@ package io.gank.feng24k.app.http.apiService;
 
 import java.util.List;
 
-import io.gank.feng24k.app.model.entity.HistoryContentInfo;
+import io.gank.feng24k.app.model.entity.RecommendInfo;
 import io.gank.feng24k.app.model.entity.base.HttpResult;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -21,7 +21,7 @@ public interface HistoryService{
      * @return
      */
     @GET("history/content/{pageSize}/{pageIndex}")
-    public Observable<HttpResult<List<HistoryContentInfo>>> getHistoryContent(@Path("pageSize")int pageSize, @Path("pageIndex")int pageIndex);
+    public Observable<HttpResult<List<RecommendInfo>>> getHistoryContent(@Path("pageSize")int pageSize, @Path("pageIndex")int pageIndex);
 
     /**
      * 获取特定日期网站数据

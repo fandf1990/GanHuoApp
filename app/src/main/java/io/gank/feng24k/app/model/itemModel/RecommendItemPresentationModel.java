@@ -3,22 +3,22 @@ package io.gank.feng24k.app.model.itemModel;
 
 import org.robobinding.itempresentationmodel.ItemContext;
 
-import io.gank.feng24k.app.model.entity.HistoryContentInfo;
-import io.gank.feng24k.app.model.presentation.main.HistoryContentPresentationModel;
+import io.gank.feng24k.app.model.entity.RecommendInfo;
+import io.gank.feng24k.app.model.presentation.main.RecommendPresentationModel;
 
-public class HistoryContentItemPresentationModel  implements org.robobinding.itempresentationmodel.ItemPresentationModel<HistoryContentInfo> {
+public class RecommendItemPresentationModel implements org.robobinding.itempresentationmodel.ItemPresentationModel<RecommendInfo> {
 
-    private HistoryContentPresentationModel mModel;
-    private HistoryContentInfo mHistoryContentInfo;
+    private RecommendPresentationModel mModel;
+    private RecommendInfo mHistoryContentInfo;
     private int position = 0;
 
 
-    public HistoryContentItemPresentationModel(HistoryContentPresentationModel model) {
+    public RecommendItemPresentationModel(RecommendPresentationModel model) {
         this.mModel = model;
     }
 
     @Override
-    public void updateData(HistoryContentInfo historyContentInfo, ItemContext itemContext) {
+    public void updateData(RecommendInfo historyContentInfo, ItemContext itemContext) {
         this.position = itemContext.getPosition();
         this.mHistoryContentInfo = historyContentInfo;
     }
@@ -34,6 +34,9 @@ public class HistoryContentItemPresentationModel  implements org.robobinding.ite
         return "每日推荐";
     }
 
+    public String getPhotoUrl(){
+        return mHistoryContentInfo.htmlAnalysis().getPhotoUrl();
+    }
     public String getTime(){
         String time = mHistoryContentInfo.getPublishedAt();
         time = time.substring(0,time.indexOf("T"));

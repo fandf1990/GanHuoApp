@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
 import io.gank.feng24k.app.R;
 
@@ -22,7 +23,7 @@ public class GlideImageView extends ImageView {
     }
 
     public void setImageUrl(String url) {
-        Glide.with(this.getContext()).load(url).error(R.drawable.img_default).placeholder(R.drawable.img_default).into(this);
+        Glide.with(this.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.drawable.img_default).placeholder(R.drawable.img_default).into(this);
     }
 
     public void setImageBitmap(Bitmap bitmap) {

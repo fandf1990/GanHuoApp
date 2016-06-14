@@ -20,7 +20,7 @@ import java.util.List;
 import io.gank.feng24k.app.R;
 import io.gank.feng24k.app.ui.base.BaseActivity;
 import io.gank.feng24k.app.ui.fragment.FuLiFragment;
-import io.gank.feng24k.app.ui.fragment.HistoryContentFragment;
+import io.gank.feng24k.app.ui.fragment.RecommendFragment;
 import io.gank.feng24k.app.ui.fragment.ResourceFragment;
 
 /**
@@ -45,7 +45,7 @@ public class MainActivity extends BaseActivity {
         super.initView();
         mViewPager = (ViewPager) findViewById(R.id.main_viewpager);
         mSmartTabLayout = (SmartTabLayout) findViewById(R.id.main_viewpager_tab_layout);
-        mFragmentList.add(HistoryContentFragment.newInstance("推荐"));
+        mFragmentList.add(RecommendFragment.newInstance("推荐"));
         mFragmentList.add(ResourceFragment.newInstance("Android"));
         mFragmentList.add(ResourceFragment.newInstance("iOS"));
         mFragmentList.add(FuLiFragment.newInstance("福利"));

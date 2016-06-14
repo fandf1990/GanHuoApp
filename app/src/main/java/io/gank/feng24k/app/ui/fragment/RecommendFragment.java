@@ -16,7 +16,7 @@ import org.robobinding.customviewbinding.CustomViewBinding;
 import org.robobinding.supportwidget.recyclerview.RecyclerViewBinding;
 
 import io.gank.feng24k.app.R;
-import io.gank.feng24k.app.model.presentation.main.HistoryContentPresentationModel;
+import io.gank.feng24k.app.model.presentation.main.RecommendPresentationModel;
 import io.gank.feng24k.app.ui.base.BaseFragment;
 import io.gank.feng24k.app.ui.widget.GlideImageView;
 import io.gank.feng24k.app.ui.widget.binding.GlideImageBinding;
@@ -25,15 +25,15 @@ import io.gank.feng24k.app.ui.widget.binding.SwipeToLoadLayoutBinding;
 /**
  * 某几日干货网站数据
  */
-public class HistoryContentFragment extends BaseFragment{
+public class RecommendFragment extends BaseFragment{
 
-    private HistoryContentPresentationModel mHistoryContentPresentationModel;
+    private RecommendPresentationModel mHistoryContentPresentationModel;
     protected RecyclerView mRecyclerView;
     protected SwipeToLoadLayout mSwipeToLoadLayout;
 
 
-    public static HistoryContentFragment newInstance(String categoryType) {
-        HistoryContentFragment fragment = new HistoryContentFragment();
+    public static RecommendFragment newInstance(String categoryType) {
+        RecommendFragment fragment = new RecommendFragment();
         Bundle bundle  = new Bundle();
         fragment.setArguments(bundle);
         return fragment;
@@ -67,8 +67,8 @@ public class HistoryContentFragment extends BaseFragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mHistoryContentPresentationModel = new HistoryContentPresentationModel(this);
-        return  createView(R.layout.history_content_frag_layout,mHistoryContentPresentationModel);
+        mHistoryContentPresentationModel = new RecommendPresentationModel(this);
+        return  createView(R.layout.recommend_frag_layout,mHistoryContentPresentationModel);
     }
 
 }

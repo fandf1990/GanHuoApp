@@ -22,7 +22,7 @@
             android:name=".ui.activity.PhotoViewActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.activity.HistoryContentDetailActivity"
+            android:name=".ui.activity.RecommendDetailActivity"
             android:screenOrientation="portrait"/>
     </application>
 

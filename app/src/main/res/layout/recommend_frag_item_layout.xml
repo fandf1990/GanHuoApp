@@ -17,10 +17,20 @@
         android:padding="10dp"
         bind:onClick="itemOnClick">
 
+        <io.gank.feng24k.app.ui.widget.GlideImageView
+            android:id="@+id/recommend_frag_item_imageview"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerCrop"
+            bind:imageUrl="{photoUrl}"/>
+
+
         <TextView
-            android:id="@+id/history_content_frag_item_title_tv"
+            android:id="@+id/recommend_frag_item_title_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/recommend_frag_item_imageview"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="获取特定日期获取特定日期网站数据:http://gank.io/api/history/content/day/2016/05/11"
@@ -29,12 +39,13 @@
             bind:text="{title}"/>
 
         <TextView
-            android:id="@+id/history_content_frag_item_tag_tv"
+            android:id="@+id/recommend_frag_item_tag_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/history_content_frag_item_title_tv"
+            android:layout_alignBottom="@id/recommend_frag_item_imageview"
+            android:layout_marginRight="10dp"
             android:layout_marginTop="25dp"
+            android:layout_toRightOf="@id/recommend_frag_item_imageview"
             android:background="@drawable/recommend_item_tag_bg"
             android:padding="3dp"
             android:text="ffffff"
@@ -45,7 +56,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/history_content_frag_item_tag_tv"
+            android:layout_alignBottom="@id/recommend_frag_item_imageview"
             android:layout_alignParentRight="true"
             android:padding="3dp"
             android:text="2016-02-13"

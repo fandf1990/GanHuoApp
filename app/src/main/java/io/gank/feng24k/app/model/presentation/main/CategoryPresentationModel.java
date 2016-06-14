@@ -23,6 +23,7 @@ public abstract class CategoryPresentationModel extends BasePresentationModel im
     protected List<BenefitEntity> mRecyclerSource = new ArrayList<>();
     protected boolean refreshing, loadingMore;
     protected int mPageIndex = 1;
+    protected int mPageSize = 20;
     protected BaseFragment mCategoryFragment;
     protected String mCategoryType;
 
@@ -39,7 +40,7 @@ public abstract class CategoryPresentationModel extends BasePresentationModel im
 
     private void getBenefitData() {
         CategoryService categoryService = RetrofitService.getInstance().create(CategoryService.class);
-        categoryService.getBenefitData(mCategoryType, 20, mPageIndex).subscribeOn(Schedulers.io())
+        categoryService.getBenefitData(mCategoryType, mPageSize, mPageIndex).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<HttpResult<List<BenefitEntity>>>() {
                     @Override
