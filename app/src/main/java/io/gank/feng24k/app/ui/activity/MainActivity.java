@@ -5,12 +5,14 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.util.SparseArrayCompat;
+import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
@@ -32,6 +34,7 @@ public class MainActivity extends BaseActivity {
 
     private final String[] mCategoryArrays = {"推荐", "Android", "iOS","福利", "休息视频", "拓展资源", "前端", "all"};
     private ViewPager mViewPager;
+    private FragmentManager mFragmentManager;
     private CategoryPagerAdapter mCategoryPagerAdapter;
     private List<Fragment> mFragmentList = new ArrayList<>();
     private SmartTabLayout mSmartTabLayout;
@@ -40,6 +43,7 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main, null);
+        mFragmentManager = getSupportFragmentManager();
     }
 
     @Override
@@ -56,7 +60,7 @@ public class MainActivity extends BaseActivity {
         mFragmentList.add(ResourceFragment.newInstance("前端"));
         mFragmentList.add(ResourceFragment.newInstance("all"));
 
-        mCategoryPagerAdapter = new CategoryPagerAdapter(getSupportFragmentManager());
+        mCategoryPagerAdapter = new CategoryPagerAdapter();
         mViewPager.setAdapter(mCategoryPagerAdapter);
 
         mSmartTabLayout.setViewPager(mViewPager);
@@ -85,19 +89,13 @@ public class MainActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private class CategoryPagerAdapter extends FragmentPagerAdapter {
+    class CategoryPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener{
 
-        private  SparseArrayCompat<WeakReference<Fragment>> holder;
+        private int currentPageIndex = 0; // 当前page索引（切换之前）
+        private OnExtraPageChangeListener onExtraPageChangeListener; // ViewPager切换页面时的额外功能添加接口
 
-
-        public CategoryPagerAdapter(FragmentManager fm) {
-            super(fm);
-            this.holder = new SparseArrayCompat<>(mFragmentList.size());
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
+        public CategoryPagerAdapter() {
+            mViewPager.setOnPageChangeListener(this);
         }
 
         @Override
@@ -105,29 +103,110 @@ public class MainActivity extends BaseActivity {
             return mFragmentList.size();
         }
 
-
         @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            Object item = super.instantiateItem(container, position);
-            if (item instanceof Fragment) {
-                holder.put(position, new WeakReference<Fragment>((Fragment) item));
-            }
-            return item;
+        public boolean isViewFromObject(View view, Object o) {
+            return view == o;
         }
 
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
-            holder.remove(position);
-            super.destroyItem(container, position, object);
+            container.removeView(mFragmentList.get(position).getView()); // 移出viewpager两边之外的page布局
         }
 
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Fragment fragment = mFragmentList.get(position);
+            if(!fragment.isAdded()){ // 如果fragment还没有added
+                FragmentTransaction ft = mFragmentManager.beginTransaction();
+                ft.add(fragment, fragment.getClass().getSimpleName());
+                ft.commitAllowingStateLoss();
+                /**
+                 * 在用FragmentTransaction.commit()方法提交FragmentTransaction对象后
+                 * 会在进程的主线程中，用异步的方式来执行。
+                 * 如果想要立即执行这个等待中的操作，就要调用这个方法（只能在主线程中调用）。
+                 * 要注意的是，所有的回调和相关的行为都会在这个调用中被执行完成，因此要仔细确认这个方法的调用位置。
+                 */
+                mFragmentManager.executePendingTransactions();
+            }
 
+            if(fragment.getView().getParent() == null){
+                container.addView(fragment.getView()); // 为viewpager增加布局
+            }
+
+            return fragment.getView();
+        }
 
         @Override
         public CharSequence getPageTitle(int position) {
             return mCategoryArrays[position];
         }
+
+
+
+        /**
+         * 当前page索引（切换之前）
+         * @return
+         */
+        public int getCurrentPageIndex() {
+            return currentPageIndex;
+        }
+
+        public OnExtraPageChangeListener getOnExtraPageChangeListener() {
+            return onExtraPageChangeListener;
+        }
+
+        /**
+         * 设置页面切换额外功能监听器
+         * @param onExtraPageChangeListener
+         */
+        public void setOnExtraPageChangeListener(OnExtraPageChangeListener onExtraPageChangeListener) {
+            this.onExtraPageChangeListener = onExtraPageChangeListener;
+        }
+
+        @Override
+        public void onPageScrolled(int i, float v, int i2) {
+            if(null != onExtraPageChangeListener){ // 如果设置了额外功能接口
+                onExtraPageChangeListener.onExtraPageScrolled(i, v, i2);
+            }
+        }
+
+        @Override
+        public void onPageSelected(int i) {
+            mFragmentList.get(currentPageIndex).onPause(); // 调用切换前Fargment的onPause()
+//        fragments.get(currentPageIndex).onStop(); // 调用切换前Fargment的onStop()
+            if(mFragmentList.get(i).isAdded()){
+//            fragments.get(i).onStart(); // 调用切换后Fargment的onStart()
+                mFragmentList.get(i).onResume(); // 调用切换后Fargment的onResume()
+            }
+            currentPageIndex = i;
+
+            if(null != onExtraPageChangeListener){ // 如果设置了额外功能接口
+                onExtraPageChangeListener.onExtraPageSelected(i);
+            }
+
+        }
+
+        @Override
+        public void onPageScrollStateChanged(int i) {
+            if(null != onExtraPageChangeListener){ // 如果设置了额外功能接口
+                onExtraPageChangeListener.onExtraPageScrollStateChanged(i);
+            }
+        }
+
+
+        /**
+         * page切换额外功能接口
+         */
+        public  class OnExtraPageChangeListener{
+            public void onExtraPageScrolled(int i, float v, int i2){}
+            public void onExtraPageSelected(int i){}
+            public void onExtraPageScrollStateChanged(int i){}
+        }
+
+
+
     }
+
 
 
 }
