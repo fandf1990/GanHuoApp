@@ -7,14 +7,19 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
+import com.kennyc.view.MultiStateView;
+
 import io.gank.feng24k.app.R;
 import io.gank.feng24k.app.ui.base.BaseMultiStateViewActivity;
 
-public class ResourceDetailActivity extends BaseMultiStateViewActivity {
+public class ResourceDetailActivity extends BaseMultiStateViewActivity implements View.OnClickListener{
 
     public static final String INTENT_RESOURCE_DETAIL_CODE = "intent_resource_detail_code";
     private String mContent;
@@ -28,6 +33,7 @@ public class ResourceDetailActivity extends BaseMultiStateViewActivity {
         setContentView(R.layout.resource_detail_activity, null);
         mWebView = (WebView) findViewById(R.id.resource_detail_webview);
         mProgressBar = (ProgressBar) findViewById(R.id.resource_detail_progress_bar);
+        setMultiStateViewListener(this);
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setAllowContentAccess(true);
         mWebView.setWebChromeClient(new WebChromeClient() {
@@ -44,12 +50,22 @@ public class ResourceDetailActivity extends BaseMultiStateViewActivity {
                 super.onPageFinished(view, url);
                 mProgressBar.setVisibility(View.GONE);
             }
+
+            @Override
+            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
+                super.onReceivedHttpError(view, request, errorResponse);
+                setMultiViewState(MultiStateView.VIEW_STATE_ERROR);
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                setMultiViewState(MultiStateView.VIEW_STATE_ERROR);
+            }
+
+
         });
-        if (mContent.startsWith("http") || mContent.startsWith("https")) {
-            mWebView.loadUrl(mContent);
-        } else {
-            mWebView.loadDataWithBaseURL(null, mContent, "text/html", "UTF-8", null);
-        }
+        loadUrl();
     }
 
     @Override
@@ -58,6 +74,15 @@ public class ResourceDetailActivity extends BaseMultiStateViewActivity {
         showNavigationButton();
     }
 
+    private void loadUrl(){
+        if (mContent.startsWith("http") || mContent.startsWith("https")) {
+            mWebView.loadUrl(mContent);
+        } else {
+            mWebView.loadDataWithBaseURL(null, mContent, "text/html", "UTF-8", null);
+        }
+    }
+
+
     @Override
     protected void setToolBarTitle(Toolbar bar) {
         super.setToolBarTitle(bar);
@@ -65,4 +90,10 @@ public class ResourceDetailActivity extends BaseMultiStateViewActivity {
         bar.setTitleTextColor(Color.WHITE);
     }
 
+    @Override
+    public void onClick(View v) {
+        setMultiViewState(MultiStateView.VIEW_STATE_CONTENT);
+        mProgressBar.setVisibility(View.VISIBLE);
+        loadUrl();
+    }
 }

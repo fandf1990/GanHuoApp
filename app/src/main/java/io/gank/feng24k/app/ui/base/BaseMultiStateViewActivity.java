@@ -2,6 +2,7 @@ package io.gank.feng24k.app.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -14,7 +15,7 @@ import org.robobinding.binder.BinderFactoryBuilder;
 
 import io.gank.feng24k.app.R;
 
-public class BaseMultiStateViewActivity extends BaseActivity {
+public class BaseMultiStateViewActivity extends AppCompatActivity {
 
     protected MultiStateView mMultiStateView;
 
@@ -83,5 +84,11 @@ public class BaseMultiStateViewActivity extends BaseActivity {
 
     public void setMultiViewState(int state){
         mMultiStateView.setViewState(state);
+    }
+
+    public void setMultiStateViewListener(View.OnClickListener onClickListener){
+        if (mMultiStateView != null && mMultiStateView.getView(MultiStateView.VIEW_STATE_ERROR) != null) {
+            mMultiStateView.getView(MultiStateView.VIEW_STATE_ERROR).setOnClickListener(onClickListener);
+        }
     }
 }
