@@ -36,6 +36,7 @@ public class CategoryFragment extends BaseFragment{
         mSwipeToLoadLayout = (SwipeToLoadLayout) findViewById(R.id.main_swipe_load_layout);
         mSwipeToLoadLayout.setOnRefreshListener(mCategoryPresentationModel);
         mSwipeToLoadLayout.setOnLoadMoreListener(mCategoryPresentationModel);
+        setErrorViewClickListener(mCategoryPresentationModel);
         mSwipeToLoadLayout.post(new Runnable() {
             @Override
             public void run() {

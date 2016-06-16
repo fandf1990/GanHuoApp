@@ -2,19 +2,21 @@ package io.gank.feng24k.app.ui.base;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.kennyc.view.MultiStateView;
+
 import org.robobinding.binder.BinderFactoryBuilder;
 
 import io.gank.feng24k.app.R;
 
-public class BaseActivity extends AppCompatActivity {
+public class BaseMultiStateViewActivity extends BaseActivity {
 
+    protected MultiStateView mMultiStateView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,14 +25,14 @@ public class BaseActivity extends AppCompatActivity {
 
     public void setContentView(int layoutId, Object presentationModel) {
         LinearLayout rootView = (LinearLayout) getLayoutInflater()
-                .inflate(R.layout.base_activity_layout, null);
+                .inflate(R.layout.base_activity_multistate_view_layout, null);
         addChildView(rootView, layoutId, presentationModel);
         setContentView(rootView);
         initView();
     }
 
     protected void initView() {
-
+        mMultiStateView = (MultiStateView) findViewById(R.id.multiview_layout_main);
     }
 
 
@@ -40,15 +42,15 @@ public class BaseActivity extends AppCompatActivity {
         View childView;
         if (presentationModel != null) {
             childView = builder.build().createViewBinder(this).inflateAndBind(layoutId, presentationModel);
-            childView.setLayoutParams(new android.widget.LinearLayout.LayoutParams(
-                    android.widget.LinearLayout.LayoutParams.MATCH_PARENT,
-                    android.widget.LinearLayout.LayoutParams.MATCH_PARENT));
+            childView.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT));
 
         } else {
             childView = LayoutInflater.from(this).inflate(layoutId, null);
         }
         ((LinearLayout) rootView
-                .findViewById(R.id.base_activity_parent_layout)).addView(childView);
+                .findViewById(R.id.base_multistateview_activity_parent_layout)).addView(childView);
         Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
         setToolBarTitle(toolbar);
         setSupportActionBar(toolbar);
@@ -79,4 +81,7 @@ public class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void setMultiViewState(int state){
+        mMultiStateView.setViewState(state);
+    }
 }

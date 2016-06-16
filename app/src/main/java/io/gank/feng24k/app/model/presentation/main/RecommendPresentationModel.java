@@ -1,10 +1,12 @@
 package io.gank.feng24k.app.model.presentation.main;
 
 import android.content.Intent;
+import android.view.View;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.jiongbull.jlog.JLog;
+import com.kennyc.view.MultiStateView;
 
 import org.robobinding.annotation.ItemPresentationModel;
 import org.robobinding.annotation.PresentationModel;
@@ -25,16 +27,16 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 @PresentationModel
-public class RecommendPresentationModel extends BasePresentationModel implements OnRefreshListener, OnLoadMoreListener {
+public class RecommendPresentationModel extends BasePresentationModel implements OnRefreshListener, OnLoadMoreListener, View.OnClickListener {
 
     private int mPageIndex = 1;
     private int mPageSize = 10;
     private List<RecommendInfo> mHistoryContentInfos = new ArrayList<>();
     protected boolean refreshing, loadingMore;
-    private RecommendFragment mHistoryContentFragment;
+    private RecommendFragment mRecommendFragment;
 
     public RecommendPresentationModel(RecommendFragment fragment) {
-        mHistoryContentFragment = fragment;
+        mRecommendFragment = fragment;
     }
 
     public void autoLoad() {
@@ -61,6 +63,7 @@ public class RecommendPresentationModel extends BasePresentationModel implements
                         loadingMore = false;
                         firePropertyChange("refreshing");
                         firePropertyChange("loadingMore");
+                        mRecommendFragment.setMultiViewState(MultiStateView.VIEW_STATE_ERROR);
                     }
 
                     @Override
@@ -91,9 +94,9 @@ public class RecommendPresentationModel extends BasePresentationModel implements
     }
 
     public void itemOnClick(int position, RecommendInfo entity) {
-        Intent intent = new Intent(mHistoryContentFragment.getActivity(), RecommendDetailActivity.class);
+        Intent intent = new Intent(mRecommendFragment.getActivity(), RecommendDetailActivity.class);
         intent.putExtra(RecommendDetailActivity.INTENT_CONTENT_CODE, entity);
-        mHistoryContentFragment.startActivity(intent);
+        mRecommendFragment.startActivity(intent);
     }
 
     @Override
@@ -114,5 +117,11 @@ public class RecommendPresentationModel extends BasePresentationModel implements
 
     public boolean isLoadingMore() {
         return loadingMore;
+    }
+
+    @Override
+    public void onClick(View v) {
+        mRecommendFragment.setMultiViewState(MultiStateView.VIEW_STATE_CONTENT);
+        autoLoad();
     }
 }

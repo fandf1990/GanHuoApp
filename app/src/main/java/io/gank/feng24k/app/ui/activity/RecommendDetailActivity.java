@@ -15,10 +15,10 @@ import java.util.List;
 import io.gank.feng24k.app.R;
 import io.gank.feng24k.app.model.entity.RecommendInfo;
 import io.gank.feng24k.app.model.entity.RecommendItemInfo;
-import io.gank.feng24k.app.ui.base.BaseActivity;
+import io.gank.feng24k.app.ui.base.BaseMultiStateViewActivity;
 import io.gank.feng24k.app.ui.widget.GlideImageView;
 
-public class RecommendDetailActivity extends BaseActivity {
+public class RecommendDetailActivity extends BaseMultiStateViewActivity {
 
     public static final String INTENT_CONTENT_CODE = "intent_content_code";
     private RecommendInfo mRecommendInfo;

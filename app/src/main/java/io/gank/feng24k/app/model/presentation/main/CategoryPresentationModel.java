@@ -1,8 +1,11 @@
 package io.gank.feng24k.app.model.presentation.main;
 
+import android.view.View;
+
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
 import com.jiongbull.jlog.JLog;
+import com.kennyc.view.MultiStateView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +21,7 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 
-public abstract class CategoryPresentationModel extends BasePresentationModel implements OnRefreshListener, OnLoadMoreListener {
+public abstract class CategoryPresentationModel extends BasePresentationModel implements OnRefreshListener, OnLoadMoreListener ,View.OnClickListener{
 
     protected List<BenefitEntity> mRecyclerSource = new ArrayList<>();
     protected boolean refreshing, loadingMore;
@@ -55,6 +58,7 @@ public abstract class CategoryPresentationModel extends BasePresentationModel im
                         loadingMore = false;
                         firePropertyChange("refreshing");
                         firePropertyChange("loadingMore");
+                        mCategoryFragment.setMultiViewState(MultiStateView.VIEW_STATE_ERROR);
                     }
 
                     @Override
@@ -89,6 +93,12 @@ public abstract class CategoryPresentationModel extends BasePresentationModel im
         mRecyclerSource.clear();
         mPageIndex = 1;
         getBenefitData();
+    }
+
+    @Override
+    public void onClick(View v) {
+        mCategoryFragment.setMultiViewState(MultiStateView.VIEW_STATE_CONTENT);
+        autoLoadBenefit(this.mCategoryType);
     }
 
     @Override

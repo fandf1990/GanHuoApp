@@ -11,12 +11,12 @@ import org.robobinding.binder.BinderFactoryBuilder;
 import io.gank.feng24k.app.R;
 import io.gank.feng24k.app.model.entity.BenefitEntity;
 import io.gank.feng24k.app.model.presentation.main.PhotoViewPrestationModel;
-import io.gank.feng24k.app.ui.base.BaseActivity;
+import io.gank.feng24k.app.ui.base.BaseMultiStateViewActivity;
 import io.gank.feng24k.app.ui.widget.PhotoImageView;
 import io.gank.feng24k.app.ui.widget.binding.PhotoImageViewBinding;
 
 
-public class PhotoViewActivity extends BaseActivity {
+public class PhotoViewActivity extends BaseMultiStateViewActivity {
 
     public static final String INTENT_PHOTOVIEW_PHOTO_CODE = "intent_photoview_photo_code";
     private PhotoViewPrestationModel mPhotoViewPrestationModel;

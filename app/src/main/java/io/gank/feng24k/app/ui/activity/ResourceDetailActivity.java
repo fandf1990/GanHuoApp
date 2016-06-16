@@ -12,9 +12,9 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import io.gank.feng24k.app.R;
-import io.gank.feng24k.app.ui.base.BaseActivity;
+import io.gank.feng24k.app.ui.base.BaseMultiStateViewActivity;
 
-public class ResourceDetailActivity extends BaseActivity {
+public class ResourceDetailActivity extends BaseMultiStateViewActivity {
 
     public static final String INTENT_RESOURCE_DETAIL_CODE = "intent_resource_detail_code";
     private String mContent;

@@ -7,9 +7,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 
 import io.gank.feng24k.app.R;
-import io.gank.feng24k.app.ui.base.BaseActivity;
+import io.gank.feng24k.app.ui.base.BaseMultiStateViewActivity;
 
-public class SearchActivity extends BaseActivity{
+public class SearchActivity extends BaseMultiStateViewActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

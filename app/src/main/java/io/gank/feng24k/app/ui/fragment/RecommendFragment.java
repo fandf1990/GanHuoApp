@@ -48,6 +48,7 @@ public class RecommendFragment extends BaseFragment{
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mSwipeToLoadLayout.setOnRefreshListener(mHistoryContentPresentationModel);
         mSwipeToLoadLayout.setOnLoadMoreListener(mHistoryContentPresentationModel);
+        setErrorViewClickListener(mHistoryContentPresentationModel);
         mSwipeToLoadLayout.post(new Runnable() {
             @Override
             public void run() {
