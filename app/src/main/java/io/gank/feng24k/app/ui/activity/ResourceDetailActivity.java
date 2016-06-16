@@ -14,7 +14,7 @@ import android.widget.ProgressBar;
 import io.gank.feng24k.app.R;
 import io.gank.feng24k.app.ui.base.BaseActivity;
 
-public class ResourceDetailActivity extends BaseActivity{
+public class ResourceDetailActivity extends BaseActivity {
 
     public static final String INTENT_RESOURCE_DETAIL_CODE = "intent_resource_detail_code";
     private String mContent;
@@ -29,8 +29,8 @@ public class ResourceDetailActivity extends BaseActivity{
         mWebView = (WebView) findViewById(R.id.resource_detail_webview);
         mProgressBar = (ProgressBar) findViewById(R.id.resource_detail_progress_bar);
         mWebView.getSettings().setJavaScriptEnabled(true);
-
-        mWebView.setWebChromeClient(new WebChromeClient(){
+        mWebView.getSettings().setAllowContentAccess(true);
+        mWebView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
@@ -38,14 +38,14 @@ public class ResourceDetailActivity extends BaseActivity{
             }
 
         });
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mProgressBar.setVisibility(View.GONE);
             }
         });
-        if (mContent.startsWith("http")||mContent.startsWith("https")) {
+        if (mContent.startsWith("http") || mContent.startsWith("https")) {
             mWebView.loadUrl(mContent);
         } else {
             mWebView.loadDataWithBaseURL(null, mContent, "text/html", "UTF-8", null);

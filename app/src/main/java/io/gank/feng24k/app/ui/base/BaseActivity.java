@@ -7,7 +7,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
 import com.kennyc.view.MultiStateView;
@@ -26,7 +25,7 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void setContentView(int layoutId, Object presentationModel) {
-        FrameLayout rootView = (FrameLayout) getLayoutInflater()
+        LinearLayout rootView = (LinearLayout) getLayoutInflater()
                 .inflate(R.layout.base_activity_layout, null);
         addChildView(rootView, layoutId, presentationModel);
         setContentView(rootView);
