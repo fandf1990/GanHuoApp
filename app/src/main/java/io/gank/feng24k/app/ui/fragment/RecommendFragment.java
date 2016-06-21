@@ -49,12 +49,12 @@ public class RecommendFragment extends BaseFragment{
         mSwipeToLoadLayout.setOnRefreshListener(mHistoryContentPresentationModel);
         mSwipeToLoadLayout.setOnLoadMoreListener(mHistoryContentPresentationModel);
         setErrorViewClickListener(mHistoryContentPresentationModel);
-        mSwipeToLoadLayout.post(new Runnable() {
+        mSwipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mHistoryContentPresentationModel.autoLoad();
             }
-        });
+        },800);
     }
 
     @Override

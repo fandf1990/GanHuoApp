@@ -37,12 +37,12 @@ public class CategoryFragment extends BaseFragment{
         mSwipeToLoadLayout.setOnRefreshListener(mCategoryPresentationModel);
         mSwipeToLoadLayout.setOnLoadMoreListener(mCategoryPresentationModel);
         setErrorViewClickListener(mCategoryPresentationModel);
-        mSwipeToLoadLayout.post(new Runnable() {
+        mSwipeToLoadLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mCategoryPresentationModel.autoLoadBenefit(mCategoryType);
             }
-        });
+        },800);
     }
 
     @Override
