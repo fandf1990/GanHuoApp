@@ -5,7 +5,6 @@ import android.view.View;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
-import com.jiongbull.jlog.JLog;
 import com.kennyc.view.MultiStateView;
 
 import org.robobinding.annotation.ItemPresentationModel;
@@ -14,6 +13,7 @@ import org.robobinding.annotation.PresentationModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.gank.feng24k.app.http.HttpSubscriber;
 import io.gank.feng24k.app.http.apiService.HistoryService;
 import io.gank.feng24k.app.http.retrofit.RetrofitService;
 import io.gank.feng24k.app.model.entity.RecommendInfo;
@@ -22,7 +22,6 @@ import io.gank.feng24k.app.model.itemModel.RecommendItemPresentationModel;
 import io.gank.feng24k.app.model.presentation.BasePresentationModel;
 import io.gank.feng24k.app.ui.activity.RecommendDetailActivity;
 import io.gank.feng24k.app.ui.fragment.RecommendFragment;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -50,15 +49,10 @@ public class RecommendPresentationModel extends BasePresentationModel implements
         HistoryService historyService = RetrofitService.getInstance().create(HistoryService.class);
         historyService.getHistoryContent(mPageSize, mPageIndex).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<HttpResult<List<RecommendInfo>>>() {
-                    @Override
-                    public void onCompleted() {
-                        JLog.d("onCompleted");
-                    }
+                .subscribe(new HttpSubscriber<HttpResult<List<RecommendInfo>>>() {
 
                     @Override
-                    public void onError(Throwable e) {
-                        JLog.d("onError " + e.getMessage());
+                    public void onFailer(Throwable e) {
                         refreshing = false;
                         loadingMore = false;
                         firePropertyChange("refreshing");
@@ -67,7 +61,7 @@ public class RecommendPresentationModel extends BasePresentationModel implements
                     }
 
                     @Override
-                    public void onNext(HttpResult<List<RecommendInfo>> listHttpResult) {
+                    public void onSuccess(HttpResult<List<RecommendInfo>> listHttpResult) {
                         if (mPageIndex == 1) {
                             refreshing = false;
                             firePropertyChange("refreshing");

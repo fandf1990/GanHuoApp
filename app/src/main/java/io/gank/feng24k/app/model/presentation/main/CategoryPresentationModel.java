@@ -4,19 +4,18 @@ import android.view.View;
 
 import com.aspsine.swipetoloadlayout.OnLoadMoreListener;
 import com.aspsine.swipetoloadlayout.OnRefreshListener;
-import com.jiongbull.jlog.JLog;
 import com.kennyc.view.MultiStateView;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.gank.feng24k.app.http.HttpSubscriber;
 import io.gank.feng24k.app.http.apiService.CategoryService;
 import io.gank.feng24k.app.http.retrofit.RetrofitService;
 import io.gank.feng24k.app.model.entity.BenefitEntity;
 import io.gank.feng24k.app.model.entity.base.HttpResult;
 import io.gank.feng24k.app.model.presentation.BasePresentationModel;
 import io.gank.feng24k.app.ui.base.BaseFragment;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -45,15 +44,10 @@ public abstract class CategoryPresentationModel extends BasePresentationModel im
         CategoryService categoryService = RetrofitService.getInstance().create(CategoryService.class);
         categoryService.getBenefitData(mCategoryType, mPageSize, mPageIndex).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<HttpResult<List<BenefitEntity>>>() {
-                    @Override
-                    public void onCompleted() {
-                        JLog.d("onCompleted");
-                    }
+                .subscribe(new HttpSubscriber<HttpResult<List<BenefitEntity>>>() {
 
                     @Override
-                    public void onError(Throwable e) {
-                        JLog.d("onError " + e.getMessage());
+                    public void onFailer(Throwable e) {
                         refreshing = false;
                         loadingMore = false;
                         firePropertyChange("refreshing");
@@ -62,7 +56,7 @@ public abstract class CategoryPresentationModel extends BasePresentationModel im
                     }
 
                     @Override
-                    public void onNext(HttpResult<List<BenefitEntity>> listHttpResult) {
+                    public void onSuccess(HttpResult<List<BenefitEntity>> listHttpResult) {
                         if (mPageIndex == 1) {
                             refreshing = false;
                             firePropertyChange("refreshing");
