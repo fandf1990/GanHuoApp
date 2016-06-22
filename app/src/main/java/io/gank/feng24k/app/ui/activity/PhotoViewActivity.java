@@ -1,9 +1,12 @@
 package io.gank.feng24k.app.ui.activity;
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageView;
 
 import org.robobinding.binder.BinderFactoryBuilder;
@@ -22,20 +25,21 @@ public class PhotoViewActivity extends BaseMultiStateViewActivity {
     private PhotoViewPrestationModel mPhotoViewPrestationModel;
     private BenefitEntity mBenefitEntity;
     private ImageView mImageView;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBenefitEntity = getIntent().getParcelableExtra(INTENT_PHOTOVIEW_PHOTO_CODE);
-        mPhotoViewPrestationModel = new PhotoViewPrestationModel(mBenefitEntity);
+        mPhotoViewPrestationModel = new PhotoViewPrestationModel(this,mBenefitEntity);
         setContentView(R.layout.photo_view_activity, mPhotoViewPrestationModel);
-
     }
 
     @Override
     protected void initView() {
         super.initView();
         showNavigationButton();
+        initProgressDialog();
     }
 
     @Override
@@ -43,6 +47,40 @@ public class PhotoViewActivity extends BaseMultiStateViewActivity {
         super.setToolBarTitle(bar);
         bar.setTitle("查看大图");
         bar.setTitleTextColor(Color.WHITE);
+    }
+
+
+    private void initProgressDialog(){
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMax(100);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        mProgressDialog.setTitle("下载");
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.setCanceledOnTouchOutside(false);
+        mProgressDialog.setButton(ProgressDialog.BUTTON_POSITIVE, "取消",mPhotoViewPrestationModel);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.photo_view_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.titlebar_download_item) {
+            mPhotoViewPrestationModel.startDownloadPhoto();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public ProgressDialog getProgressDialog(){
+        if(mProgressDialog ==null){
+            initProgressDialog();
+        }
+        return mProgressDialog;
     }
 
 

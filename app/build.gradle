@@ -10,7 +10,7 @@ repositories {
 
 
 android {
-    compileSdkVersion 23
+    compileSdkVersion 24
     buildToolsVersion '24.0.0'
 
     defaultConfig {
@@ -60,4 +60,6 @@ dependencies {
     compile 'com.github.Kennyc1012:MultiStateView:1.2.0'
     compile 'com.ogaclejapan.smarttablayout:library:1.6.1'
     compile 'org.jsoup:jsoup:1.9.2'
+    compile 'com.zhy:okhttputils:2.6.2'
+    compile 'com.daimajia.numberprogressbar:library:1.2@aar'
 }
