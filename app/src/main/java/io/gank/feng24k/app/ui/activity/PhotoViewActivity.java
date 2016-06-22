@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 
 import org.robobinding.binder.BinderFactoryBuilder;
 
@@ -24,7 +23,6 @@ public class PhotoViewActivity extends BaseMultiStateViewActivity {
     public static final String INTENT_PHOTOVIEW_PHOTO_CODE = "intent_photoview_photo_code";
     private PhotoViewPrestationModel mPhotoViewPrestationModel;
     private BenefitEntity mBenefitEntity;
-    private ImageView mImageView;
     private ProgressDialog mProgressDialog;
 
     @Override
