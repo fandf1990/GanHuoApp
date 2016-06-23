@@ -46,20 +46,22 @@ public class RecommendDetailActivity extends BaseActivity {
             titleTv.setText(recommendItemInfo.getCytagoryName());
             LinearLayout rootView = (LinearLayout) view.findViewById(R.id.recommend_detail_item_rootview);
             List<RecommendItemInfo.BaseItemInfo> baseItemInfos = recommendItemInfo.getBaseItemInfos();
-            rootView.removeAllViews();
-            for (RecommendItemInfo.BaseItemInfo baseItemInfo : baseItemInfos) {
-                TextView textView = (TextView) getLayoutInflater().inflate(R.layout.recommend_detail_item_child_layout, null);
-                textView.setText(baseItemInfo.getText());
-                textView.setTag(baseItemInfo.getUrl());
-                textView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent = new Intent(RecommendDetailActivity.this, ResourceDetailActivity.class);
-                        intent.putExtra(ResourceDetailActivity.INTENT_RESOURCE_DETAIL_CODE, v.getTag().toString());
-                        startActivity(intent);
-                    }
-                });
-                rootView.addView(textView);
+            if(baseItemInfos!=null){
+                rootView.removeAllViews();
+                for (RecommendItemInfo.BaseItemInfo baseItemInfo : baseItemInfos) {
+                    TextView textView = (TextView) getLayoutInflater().inflate(R.layout.recommend_detail_item_child_layout, null);
+                    textView.setText(baseItemInfo.getText());
+                    textView.setTag(baseItemInfo.getUrl());
+                    textView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(RecommendDetailActivity.this, ResourceDetailActivity.class);
+                            intent.putExtra(ResourceDetailActivity.INTENT_RESOURCE_DETAIL_CODE, v.getTag().toString());
+                            startActivity(intent);
+                        }
+                    });
+                    rootView.addView(textView);
+                }
             }
             //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             //layoutParams.setMargins(0, 10, 0, 0);

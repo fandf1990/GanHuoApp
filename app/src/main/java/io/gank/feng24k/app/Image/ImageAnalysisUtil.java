@@ -27,8 +27,11 @@ public class ImageAnalysisUtil {
         List<RecommendItemInfo> recommendItemInfos = new ArrayList<>();
         for(Element e:categoryName){
             RecommendItemInfo info = new RecommendItemInfo();
-            info.setCytagoryName(e.text());
-            recommendItemInfos.add(info);
+            String name = e.text();
+            if(!TextUtils.isEmpty(name)) {
+                info.setCytagoryName(name);
+                recommendItemInfos.add(info);
+            }
         }
         Elements categoryData = document.getElementsByTag("ul");
         int count = categoryData.size();
