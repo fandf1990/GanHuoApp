@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -46,21 +47,31 @@ public class RecommendDetailActivity extends BaseActivity {
             titleTv.setText(recommendItemInfo.getCytagoryName());
             LinearLayout rootView = (LinearLayout) view.findViewById(R.id.recommend_detail_item_rootview);
             List<RecommendItemInfo.BaseItemInfo> baseItemInfos = recommendItemInfo.getBaseItemInfos();
-            if(baseItemInfos!=null){
+            if (baseItemInfos != null) {
                 rootView.removeAllViews();
                 for (RecommendItemInfo.BaseItemInfo baseItemInfo : baseItemInfos) {
-                    TextView textView = (TextView) getLayoutInflater().inflate(R.layout.recommend_detail_item_child_layout, null);
-                    textView.setText(baseItemInfo.getText());
-                    textView.setTag(baseItemInfo.getUrl());
-                    textView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(RecommendDetailActivity.this, ResourceDetailActivity.class);
-                            intent.putExtra(ResourceDetailActivity.INTENT_RESOURCE_DETAIL_CODE, v.getTag().toString());
-                            startActivity(intent);
-                        }
-                    });
-                    rootView.addView(textView);
+                    if (!TextUtils.isEmpty(baseItemInfo.getText())) {
+                        TextView textView = (TextView) getLayoutInflater().inflate(R.layout.recommend_detail_item_textview_layout, null);
+                        textView.setText(baseItemInfo.getText());
+                        textView.setTag(baseItemInfo.getUrl());
+                        textView.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(RecommendDetailActivity.this, ResourceDetailActivity.class);
+                                intent.putExtra(ResourceDetailActivity.INTENT_RESOURCE_DETAIL_CODE, v.getTag().toString());
+                                startActivity(intent);
+                            }
+                        });
+                        rootView.addView(textView);
+                    }
+//                    else {
+//                        String photoUrl = baseItemInfo.getPhotoUrl();
+//                        if(!TextUtils.isEmpty(photoUrl)) {
+//                            GlideImageView glideImageView = (GlideImageView) getLayoutInflater().inflate(R.layout.recommend_detail_item_imageview_layout, null);
+//                            glideImageView.setImageUrl(photoUrl);
+//                            rootView.addView(glideImageView);
+//                        }
+//                    }
                 }
             }
             //LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);

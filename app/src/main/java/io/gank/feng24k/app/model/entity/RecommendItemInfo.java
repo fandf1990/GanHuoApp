@@ -29,6 +29,15 @@ public class RecommendItemInfo implements Parcelable {
     public static class BaseItemInfo implements Parcelable {
         private String text;
         private String url;
+        private String photoUrl;
+
+        public String getPhotoUrl() {
+            return photoUrl;
+        }
+
+        public void setPhotoUrl(String photoUrl) {
+            this.photoUrl = photoUrl;
+        }
 
         public String getText() {
             return text;
