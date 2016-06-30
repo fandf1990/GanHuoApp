@@ -35,14 +35,16 @@ public class ImageAnalysisUtil {
             recommendItemInfo.setCytagoryName(h3.text());
 
             List<RecommendItemInfo.BaseItemInfo> baseItemInfoList = new ArrayList<>();
-            Elements hrefElement = h3.nextElementSibling().select("a[href]");
-            for(Element herf:hrefElement){
-                if(!herf.text().equals("")){
-                    RecommendItemInfo.BaseItemInfo info = new RecommendItemInfo.BaseItemInfo();
-                    info.setText(herf.text());
-                    info.setUrl(herf.attr("href"));
-                    baseItemInfoList.add(info);
-                }
+            Element nextElement = h3.nextElementSibling();
+            if( nextElement!=null){
+                Elements hrefElement = nextElement.select("a[href]");
+                for(Element herf:hrefElement){
+                    if(!herf.text().equals("")){
+                        RecommendItemInfo.BaseItemInfo info = new RecommendItemInfo.BaseItemInfo();
+                        info.setText(herf.text());
+                        info.setUrl(herf.attr("href"));
+                        baseItemInfoList.add(info);
+                    }
 //                else{
 //                    String photo = herf.select("img[src]").get(0).attr("src");
 //                    if(!TextUtils.isEmpty(photo)) {
@@ -51,9 +53,10 @@ public class ImageAnalysisUtil {
 //                        baseItemInfoList.add(info);
 //                    }
 //                }
+                }
+                recommendItemInfo.setBaseItemInfos(baseItemInfoList);
+                recommendItemInfos.add(recommendItemInfo);
             }
-            recommendItemInfo.setBaseItemInfos(baseItemInfoList);
-            recommendItemInfos.add(recommendItemInfo);
         }
         recommendInfo.setRecommendItemInfos(recommendItemInfos);
         return recommendInfo;

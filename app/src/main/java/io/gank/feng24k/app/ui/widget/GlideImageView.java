@@ -2,6 +2,7 @@ package io.gank.feng24k.app.ui.widget;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.ImageView;
 
@@ -23,7 +24,12 @@ public class GlideImageView extends ImageView {
     }
 
     public void setImageUrl(String url) {
-        Glide.with(this.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.drawable.img_default).placeholder(R.drawable.img_default).into(this);
+        if(!TextUtils.isEmpty(url)){
+            Glide.with(this.getContext()).load(url).diskCacheStrategy(DiskCacheStrategy.ALL).error(R.drawable.img_default).placeholder(R.drawable.img_default).into(this);
+        }else{
+            Glide.with(this.getContext()).load(R.drawable.img_default).into(this);
+        }
+
     }
 
     public void setImageBitmap(Bitmap bitmap) {

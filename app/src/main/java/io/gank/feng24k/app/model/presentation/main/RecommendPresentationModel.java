@@ -41,7 +41,6 @@ public class RecommendPresentationModel extends BasePresentationModel implements
     public void autoLoad() {
         refreshing = true;
         firePropertyChange("refreshing");
-        getHistoryContent();
     }
 
 
