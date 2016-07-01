@@ -29,7 +29,7 @@ public class ImageAnalysisUtil {
 
         List<RecommendItemInfo> recommendItemInfos = new ArrayList<>();
 
-        for(int i=1;i<categoryName.size();i++){
+        for(int i=0;i<categoryName.size();i++){
             RecommendItemInfo recommendItemInfo = new RecommendItemInfo();
             Element h3 = categoryName.get(i);
             recommendItemInfo.setCytagoryName(h3.text());
