@@ -5,16 +5,22 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 
 import io.gank.feng24k.app.R;
+import io.gank.feng24k.app.model.presentation.search.SearchPresentationModel;
 import io.gank.feng24k.app.ui.base.BaseMultiStateViewActivity;
 
 public class SearchActivity extends BaseMultiStateViewActivity {
 
+
+    private SearchPresentationModel mSearchPresentationModel;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_activity,null);
+        mSearchPresentationModel = new SearchPresentationModel(this);
+        setContentView(R.layout.search_activity,mSearchPresentationModel);
     }
 
     @Override
@@ -26,7 +32,7 @@ public class SearchActivity extends BaseMultiStateViewActivity {
     @Override
     protected void setToolBarTitle(Toolbar bar) {
         super.setToolBarTitle(bar);
-        bar.setTitle("搜索");
+        bar.setVisibility(View.GONE);
         bar.setTitleTextColor(Color.WHITE);
     }
 }
