@@ -27,10 +27,11 @@
             android:paddingRight="10dp">
 
             <ImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 bind:onClick="onBackClick"
-                android:background="@drawable/abc_ic_ab_back_material"/>
+                app:srcCompat="@drawable/abc_ic_ab_back_material"/>
 
             <Spinner
                 android:id="@+id/search_category_spinner"
@@ -50,4 +51,10 @@
                 android:singleLine="true"/>
         </LinearLayout>
     </LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        bind:itemLayout="[@layout/search_item_layout]"
+        bind:source="{searchRecyclerSource}"/>
 </LinearLayout>

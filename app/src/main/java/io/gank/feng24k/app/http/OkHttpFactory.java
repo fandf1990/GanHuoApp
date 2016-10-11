@@ -14,6 +14,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 public class OkHttpFactory {
 
@@ -35,7 +36,13 @@ public class OkHttpFactory {
     public OkHttpClient getOkHttpClient() {
         if (mOkHttpClient == null) {
             OkHttpClient.Builder okhttpBuilder = new OkHttpClient.Builder();
+
+            HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
             okhttpBuilder.addInterceptor(REWRITE_CACHE_CONTROL_INTERCEPTOR);
+            okhttpBuilder.addInterceptor(interceptor);
+
             okhttpBuilder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
             okhttpBuilder.readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
             String path = GankApplication.getInstance().getCacheDir().getPath()+ File.separator+"httpcache";
