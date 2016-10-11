@@ -1,57 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:bind="http://robobinding.org/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              xmlns:bind="http://robobinding.org/android"
               android:orientation="vertical">
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/edit_bg"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
-
-            <ImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                bind:onClick="onBackClick"
-                app:srcCompat="@drawable/abc_ic_ab_back_material"/>
-
-            <Spinner
-                android:id="@+id/search_category_spinner"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:entries="@array/languages"
-                android:gravity="center"
-                bind:selectedItemPosition="${selectedSourceIndex}"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="通过关键字搜索"
-                android:background="@color/transparent"
-                android:textSize="15sp"
-                bind:text="${categoryQuery}"
-                android:singleLine="true"/>
-        </LinearLayout>
-    </LinearLayout>
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/search_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

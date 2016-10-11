@@ -1,7 +1,14 @@
 package io.gank.feng24k.app.model.presentation.search;
 
-import com.jiongbull.jlog.JLog;
+import android.content.Intent;
+import android.view.View;
 
+import com.kennyc.view.MultiStateView;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.robobinding.annotation.ItemPresentationModel;
 import org.robobinding.annotation.PresentationModel;
 
@@ -9,12 +16,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.gank.feng24k.app.R;
 import io.gank.feng24k.app.http.HttpSubscriber;
 import io.gank.feng24k.app.http.apiService.SearchService;
 import io.gank.feng24k.app.http.retrofit.SearchRetrofitService;
+import io.gank.feng24k.app.model.entity.SearchResultInfo;
 import io.gank.feng24k.app.model.itemModel.SearchItemPresentationModel;
 import io.gank.feng24k.app.model.presentation.BasePresentationModel;
+import io.gank.feng24k.app.ui.activity.ResourceDetailActivity;
 import io.gank.feng24k.app.ui.activity.SearchActivity;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -29,51 +37,53 @@ import rx.schedulers.Schedulers;
  * Email: fandf@525happy.cn
  */
 @PresentationModel
-public class SearchPresentationModel extends BasePresentationModel {
+public class SearchPresentationModel extends BasePresentationModel implements View.OnClickListener{
 
 
     private SearchActivity mActivity;
-    private int mSelectedSourceIndex;
-    private String mCategoryQuery = "android";
-    private String mCategoryType = "all";
-    private int mPageSize = 10;
-    private int mPageIndex = 1;
+    private List<SearchResultInfo> mSearchSourceList;
 
     public SearchPresentationModel(SearchActivity activity) {
         this.mActivity = activity;
-    }
-
-    public void setSelectedSourceIndex(int selectedSourceIndex) {
-        mCategoryType = mActivity.getResources().getStringArray(R.array.languages)[selectedSourceIndex];
-        JLog.d("SearchPresentationModel", mCategoryType);
-    }
-
-    public int getSelectedSourceIndex() {
-        return mSelectedSourceIndex;
     }
 
     public void onBackClick() {
         mActivity.finish();
     }
 
-    public String getCategoryQuery() {
-        return mCategoryQuery;
-    }
-
-    public void setCategoryQuery(String categoryQuery) {
-        mCategoryQuery = categoryQuery;
-    }
-
-    public void startSearchByCategory() {
-        Observable.create(new Observable.OnSubscribe<String>() {
+    private void startSearchByCategory(final String categoryQuery) {
+        mActivity.setMultiViewState(MultiStateView.VIEW_STATE_LOADING);
+        Observable.create(new Observable.OnSubscribe<List<SearchResultInfo>>() {
             @Override
-            public void call(Subscriber<? super String> subscriber) {
+            public void call(Subscriber<? super List<SearchResultInfo>> subscriber) {
                 Call<String> call = SearchRetrofitService.getInstance().create(SearchService.class)
-                        .searchByQuery(mCategoryQuery);
+                        .searchByQuery(categoryQuery);
                 try {
                     Response<String> response = call.execute();
                     if (response.code() == 200) {
-                        subscriber.onNext(response.body());
+                        List<SearchResultInfo> searchResultInfos = new ArrayList<>();
+
+                        Document document = Jsoup.parse(response.body());
+                        Elements elements = document.getElementsByClass("row");
+                        for (Element e : elements) {
+                            SearchResultInfo searchResultInfo = new SearchResultInfo();
+
+                            Elements linksElements = e.getElementsByTag("a");
+                            Elements smallElements = e.getElementsByTag("small");
+
+                            if (smallElements == null || smallElements.size() == 0) {
+                                continue;
+                            }
+
+                            searchResultInfo.setUrl(linksElements.attr("href"));
+                            searchResultInfo.setDesc(linksElements.text());
+                            String type = smallElements.get(0).text();
+                            searchResultInfo.setType(type.substring(1,type.length()-1));
+                            searchResultInfo.setWho(smallElements.get(1).text());
+
+                            searchResultInfos.add(searchResultInfo);
+                        }
+                        subscriber.onNext(searchResultInfos);
                     } else {
                         subscriber.onError(new IOException());
                     }
@@ -82,21 +92,52 @@ public class SearchPresentationModel extends BasePresentationModel {
                 }
             }
         }).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(new HttpSubscriber<String>() {
-            @Override
-            public void onFailer(Throwable e) {
-                JLog.d("onFailer ",e.getMessage());
-            }
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new HttpSubscriber<List<SearchResultInfo>>() {
+                    @Override
+                    public void onFailer(Throwable e) {
+                        mActivity.setMultiViewState(MultiStateView.VIEW_STATE_ERROR);
+                    }
 
-            @Override
-            public void onSuccess(String s) {
-                JLog.d("SearchPresentation",s);
-            }
-        });
+                    @Override
+                    public void onSuccess(List<SearchResultInfo> infos) {
+                        mSearchSourceList = infos;
+                        if(mSearchSourceList!=null&&mSearchSourceList.size()>0){
+                            mActivity.setMultiViewState(MultiStateView.VIEW_STATE_CONTENT);
+                        }else{
+                            mActivity.setMultiViewState(MultiStateView.VIEW_STATE_EMPTY);
+                        }
+                        firePropertyChange("searchRecyclerSource");
+                    }
+                });
     }
 
-    @ItemPresentationModel(value = SearchItemPresentationModel.class)
-    public List<String> getSearchRecyclerSource() {
-        return new ArrayList<>();
+    public void resetDataEmpty(){
+        mSearchSourceList.clear();
+        firePropertyChange("searchRecyclerSource");
+    }
+
+    @ItemPresentationModel(value = SearchItemPresentationModel.class, factoryMethod = "createSearchItemModel")
+    public List<SearchResultInfo> getSearchRecyclerSource() {
+        return mSearchSourceList;
+    }
+
+    public SearchItemPresentationModel createSearchItemModel() {
+        return new SearchItemPresentationModel(this);
+    }
+
+    public void onSearchClick(String categoryQuery) {
+        startSearchByCategory(categoryQuery);
+    }
+
+    public void itemOnClick(int position) {
+        Intent intent = new Intent(mActivity, ResourceDetailActivity.class);
+        intent.putExtra(ResourceDetailActivity.INTENT_RESOURCE_DETAIL_CODE, mSearchSourceList.get(position).getUrl());
+        mActivity.startActivity(intent);
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }
