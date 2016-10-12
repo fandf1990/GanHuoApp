@@ -95,5 +95,11 @@ public class RecommendDetailActivity extends BaseActivity {
         bar.setTitleTextColor(Color.WHITE);
     }
 
+    public void photoOnClick(View view) {
+        Intent intent = new Intent(this, PhotoViewActivity.class);
+        intent.putExtra(PhotoViewActivity.INTENT_PHOTOVIEW_PHOTO_CODE, mRecommendInfo.getPhotoUrl());
+        startActivity(intent);
+    }
+
 
 }

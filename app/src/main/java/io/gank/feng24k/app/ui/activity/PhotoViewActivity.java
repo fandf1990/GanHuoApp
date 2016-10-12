@@ -22,14 +22,14 @@ public class PhotoViewActivity extends BaseMultiStateViewActivity {
 
     public static final String INTENT_PHOTOVIEW_PHOTO_CODE = "intent_photoview_photo_code";
     private PhotoViewPrestationModel mPhotoViewPrestationModel;
-    private BenefitEntity mBenefitEntity;
+    private String mPhotoUrl;
     private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mBenefitEntity = getIntent().getParcelableExtra(INTENT_PHOTOVIEW_PHOTO_CODE);
-        mPhotoViewPrestationModel = new PhotoViewPrestationModel(this,mBenefitEntity);
+        mPhotoUrl = getIntent().getStringExtra(INTENT_PHOTOVIEW_PHOTO_CODE);
+        mPhotoViewPrestationModel = new PhotoViewPrestationModel(this,mPhotoUrl);
         setContentView(R.layout.photo_view_activity, mPhotoViewPrestationModel);
     }
 

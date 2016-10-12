@@ -10,14 +10,6 @@ repositories {
 
 
 android {
-    signingConfigs {
-        release_config {
-            keyAlias 'ahaha'
-            keyPassword '111111'
-            storeFile file('D:/androidWorkspace/GanHuo/release_keystore.jks')
-            storePassword '111111'
-        }
-    }
     compileSdkVersion 24
     buildToolsVersion '24.0.0'
     defaultConfig {

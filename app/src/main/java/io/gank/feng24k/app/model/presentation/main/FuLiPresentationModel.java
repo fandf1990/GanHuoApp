@@ -33,7 +33,7 @@ public class FuLiPresentationModel extends CategoryPresentationModel  {
 
     public void itemOnClick(int position, BenefitEntity entity) {
         Intent intent = new Intent(mCategoryFragment.getActivity(), PhotoViewActivity.class);
-        intent.putExtra(PhotoViewActivity.INTENT_PHOTOVIEW_PHOTO_CODE, entity);
+        intent.putExtra(PhotoViewActivity.INTENT_PHOTOVIEW_PHOTO_CODE, entity.getUrl());
         mCategoryFragment.getActivity().startActivity(intent);
     }
 }

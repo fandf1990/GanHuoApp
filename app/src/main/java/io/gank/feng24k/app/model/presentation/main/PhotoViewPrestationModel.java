@@ -20,24 +20,24 @@ import okhttp3.Call;
 @PresentationModel
 public class PhotoViewPrestationModel extends BasePresentationModel implements  DialogInterface.OnClickListener{
 
-    private BenefitEntity mBenefitEntity;
+    private String mPhotoUrl;
     private PhotoViewActivity mActivity;
     private String mDownloadUrl;
     private String mFileSavePath = Environment.getExternalStorageDirectory().getAbsolutePath()+File.separator+"gank.io";
 
-    public PhotoViewPrestationModel(PhotoViewActivity activity, BenefitEntity entity) {
-        this.mBenefitEntity = entity;
+    public PhotoViewPrestationModel(PhotoViewActivity activity, String photoUrl) {
+        this.mPhotoUrl = photoUrl;
         this.mActivity = activity;
     }
 
     public String getImageUrl() {
-        return mBenefitEntity.getUrl();
+        return mPhotoUrl;
     }
 
 
     public void startDownloadPhoto(){
         //mDownloadUrl="http://dldir1.qq.com/qqfile/qq/QQ8.4/18357/QQ8.4.exe";
-        mDownloadUrl = mBenefitEntity.getUrl();
+        mDownloadUrl = mPhotoUrl;
         mActivity.getProgressDialog().show();
         String fileName = mDownloadUrl.substring(mDownloadUrl.lastIndexOf("/")+1,mDownloadUrl.length());
         OkHttpUtils
