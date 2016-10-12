@@ -1,6 +1,7 @@
 package io.gank.feng24k.app.ui.activity;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,6 +30,7 @@ public class SearchActivity extends BaseMultiStateViewActivity implements View.O
     private SearchPresentationModel mSearchPresentationModel;
     private RecyclerView mRecyclerView;
     private EditText mQueryEdit;
+    private InputMethodManager mInputMethodManager;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,9 +101,17 @@ public class SearchActivity extends BaseMultiStateViewActivity implements View.O
                     Toast.makeText(this,"请输入搜索关键字",Toast.LENGTH_SHORT).show();
                     return;
                 }
+                dismissInputMethodDialog();
                 mSearchPresentationModel.onSearchClick(query);
                 break;
             }
         }
+    }
+
+    private void dismissInputMethodDialog(){
+        if(mInputMethodManager==null) {
+            mInputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        }
+        mInputMethodManager.hideSoftInputFromWindow(mQueryEdit.getWindowToken(),0);
     }
 }

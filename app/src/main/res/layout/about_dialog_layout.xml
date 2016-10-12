@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingBottom="10dp"
+              android:paddingEnd="?attr/dialogPreferredPadding"
+              android:paddingStart="?attr/dialogPreferredPadding"
+              android:paddingTop="10dp"
+    >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="感谢以下开源项目："
+        android:textSize="15sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:id="@+id/about_dialog_parent_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+
+            android:text="https://github.com/RoboBinding/RoboBinding"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/JakeWharton/NineOldAndroids"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/JiongBull/jlog"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/Aspsine/SwipeToLoadLayout"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/google/gson"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/square/retrofit"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/ReactiveX/RxJava"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/square/okhttp"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/bumptech/glide"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/Kennyc1012/MultiStateView"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/ogaclejapan/SmartTabLayout"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/jhy/jsoup"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/hongyangAndroid/okhttputils"/>
+
+        <TextView
+            style="@style/about_dialog_textview_style"
+            android:text="https://github.com/81813780/AVLoadingIndicatorView"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="感谢gank.io提供api"
+        android:textSize="15sp"
+        android:textStyle="bold"/>
+</LinearLayout>

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
@@ -19,7 +20,7 @@ import com.kennyc.view.MultiStateView;
 import io.gank.feng24k.app.R;
 import io.gank.feng24k.app.ui.base.BaseMultiStateViewActivity;
 
-public class ResourceDetailActivity extends BaseMultiStateViewActivity implements View.OnClickListener{
+public class ResourceDetailActivity extends BaseMultiStateViewActivity implements View.OnClickListener {
 
     public static final String INTENT_RESOURCE_DETAIL_CODE = "intent_resource_detail_code";
     private String mContent;
@@ -74,11 +75,15 @@ public class ResourceDetailActivity extends BaseMultiStateViewActivity implement
         showNavigationButton();
     }
 
-    private void loadUrl(){
-        if (mContent.startsWith("http") || mContent.startsWith("https")) {
-            mWebView.loadUrl(mContent);
+    private void loadUrl() {
+        if (TextUtils.isEmpty(mContent)) {
+            setMultiViewState(MultiStateView.VIEW_STATE_ERROR);
         } else {
-            mWebView.loadDataWithBaseURL(null, mContent, "text/html", "UTF-8", null);
+            if (mContent.startsWith("http") || mContent.startsWith("https")) {
+                mWebView.loadUrl(mContent);
+            } else {
+                mWebView.loadDataWithBaseURL(null, mContent, "text/html", "UTF-8", null);
+            }
         }
     }
 

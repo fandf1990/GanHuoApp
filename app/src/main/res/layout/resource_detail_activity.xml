@@ -18,7 +18,7 @@
             android:id="@+id/resource_detail_progress_bar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="2dp"
             android:layout_alignParentTop="true"
             android:max="100"
             android:progress="50"

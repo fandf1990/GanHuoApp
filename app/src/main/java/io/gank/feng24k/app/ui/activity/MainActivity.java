@@ -1,5 +1,8 @@
 package io.gank.feng24k.app.ui.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.ogaclejapan.smarttablayout.SmartTabLayout;
 
@@ -30,7 +35,7 @@ import io.gank.feng24k.app.ui.fragment.ResourceFragment;
  */
 public class MainActivity extends BaseActivity {
 
-    private final String[] mCategoryArrays = {"推荐", "Android", "iOS","福利", "休息视频", "拓展资源", "前端", "all"};
+    private final String[] mCategoryArrays = {"推荐", "Android", "iOS", "福利", "休息视频", "拓展资源", "前端", "all"};
     private ViewPager mViewPager;
     private FragmentManager mFragmentManager;
     private CategoryPagerAdapter mCategoryPagerAdapter;
@@ -79,15 +84,24 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.titlebar_search) {
-            Intent intent = new Intent(this,SearchActivity.class);
-            startActivity(intent);
-            return true;
+
+        switch (item.getItemId()) {
+            case R.id.titlebar_search: {
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivity(intent);
+                return true;
+            }
+            case R.id.titlebar_about: {
+                showAboutDialog();
+                return true;
+            }
         }
+
+
         return super.onOptionsItemSelected(item);
     }
 
-    class CategoryPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener{
+    class CategoryPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener {
 
         private int currentPageIndex = 0; // 当前page索引（切换之前）
         private OnExtraPageChangeListener onExtraPageChangeListener; // ViewPager切换页面时的额外功能添加接口
@@ -114,7 +128,7 @@ public class MainActivity extends BaseActivity {
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             Fragment fragment = mFragmentList.get(position);
-            if(!fragment.isAdded()){ // 如果fragment还没有added
+            if (!fragment.isAdded()) { // 如果fragment还没有added
                 FragmentTransaction ft = mFragmentManager.beginTransaction();
                 ft.add(fragment, fragment.getClass().getSimpleName());
                 ft.commitAllowingStateLoss();
@@ -127,7 +141,7 @@ public class MainActivity extends BaseActivity {
                 mFragmentManager.executePendingTransactions();
             }
 
-            if(fragment.getView().getParent() == null){
+            if (fragment.getView().getParent() == null) {
                 container.addView(fragment.getView()); // 为viewpager增加布局
             }
 
@@ -140,9 +154,9 @@ public class MainActivity extends BaseActivity {
         }
 
 
-
         /**
          * 当前page索引（切换之前）
+         *
          * @return
          */
         public int getCurrentPageIndex() {
@@ -155,6 +169,7 @@ public class MainActivity extends BaseActivity {
 
         /**
          * 设置页面切换额外功能监听器
+         *
          * @param onExtraPageChangeListener
          */
         public void setOnExtraPageChangeListener(OnExtraPageChangeListener onExtraPageChangeListener) {
@@ -163,7 +178,7 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void onPageScrolled(int i, float v, int i2) {
-            if(null != onExtraPageChangeListener){ // 如果设置了额外功能接口
+            if (null != onExtraPageChangeListener) { // 如果设置了额外功能接口
                 onExtraPageChangeListener.onExtraPageScrolled(i, v, i2);
             }
         }
@@ -172,13 +187,13 @@ public class MainActivity extends BaseActivity {
         public void onPageSelected(int i) {
             mFragmentList.get(currentPageIndex).onPause(); // 调用切换前Fargment的onPause()
 //        fragments.get(currentPageIndex).onStop(); // 调用切换前Fargment的onStop()
-            if(mFragmentList.get(i).isAdded()){
+            if (mFragmentList.get(i).isAdded()) {
 //            fragments.get(i).onStart(); // 调用切换后Fargment的onStart()
                 mFragmentList.get(i).onResume(); // 调用切换后Fargment的onResume()
             }
             currentPageIndex = i;
 
-            if(null != onExtraPageChangeListener){ // 如果设置了额外功能接口
+            if (null != onExtraPageChangeListener) { // 如果设置了额外功能接口
                 onExtraPageChangeListener.onExtraPageSelected(i);
             }
 
@@ -186,7 +201,7 @@ public class MainActivity extends BaseActivity {
 
         @Override
         public void onPageScrollStateChanged(int i) {
-            if(null != onExtraPageChangeListener){ // 如果设置了额外功能接口
+            if (null != onExtraPageChangeListener) { // 如果设置了额外功能接口
                 onExtraPageChangeListener.onExtraPageScrollStateChanged(i);
             }
         }
@@ -195,16 +210,54 @@ public class MainActivity extends BaseActivity {
         /**
          * page切换额外功能接口
          */
-        public  class OnExtraPageChangeListener{
-            public void onExtraPageScrolled(int i, float v, int i2){}
-            public void onExtraPageSelected(int i){}
-            public void onExtraPageScrollStateChanged(int i){}
-        }
+        public class OnExtraPageChangeListener {
+            public void onExtraPageScrolled(int i, float v, int i2) {
+            }
 
+            public void onExtraPageSelected(int i) {
+            }
+
+            public void onExtraPageScrollStateChanged(int i) {
+            }
+
+        }
 
 
     }
 
+    private Dialog mAboutDialog;
+
+    private void showAboutDialog() {
+        if (mAboutDialog == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            View view = getLayoutInflater().inflate(R.layout.about_dialog_layout,null);
+            LinearLayout parentLayout = (LinearLayout) view.findViewById(R.id.about_dialog_parent_layout);
+            int childCount = parentLayout.getChildCount();
+            for(int i=0;i<childCount;i++){
+                View childView = parentLayout.getChildAt(i);
+                if(childView instanceof TextView){
+                    childView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(MainActivity.this,ResourceDetailActivity.class);
+                            intent.putExtra(ResourceDetailActivity.INTENT_RESOURCE_DETAIL_CODE,((TextView)v).getText());
+                            startActivity(intent);
+                        }
+                    });
+                }
+            }
+            builder.setTitle("关于").setView(view)
+                    .setCancelable(false)
+                    .setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mAboutDialog.dismiss();
+                        }
+                    });
+            mAboutDialog = builder.create();
+        }
+        mAboutDialog.show();
+    }
 
 
 }
