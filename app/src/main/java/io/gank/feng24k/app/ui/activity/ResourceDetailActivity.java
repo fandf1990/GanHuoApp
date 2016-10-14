@@ -123,10 +123,12 @@ public class ResourceDetailActivity extends BaseMultiStateViewActivity implement
 
 
     private void showShareDialog(){
-        Intent intent = new Intent();
-        intent.setAction(Intent.ACTION_SEND);
-        intent.putExtra(Intent.EXTRA_TEXT, mContent);
-        intent.setType("text/plain");
-        startActivity(intent);
+        Intent share_intent = new Intent();
+        share_intent.setAction(Intent.ACTION_SEND);//设置分享行为
+        share_intent.setType("text/plain");//设置分享内容的类型
+        share_intent.putExtra(Intent.EXTRA_TEXT, mContent);//添加分享内容
+        //创建分享的Dialog
+        share_intent = Intent.createChooser(share_intent, "分享");
+        startActivity(share_intent);
     }
 }
