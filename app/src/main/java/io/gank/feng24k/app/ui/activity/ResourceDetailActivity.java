@@ -121,6 +121,17 @@ public class ResourceDetailActivity extends BaseMultiStateViewActivity implement
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        if(mWebView.canGoBack()){
+            mWebView.goBack();
+        }else{
+            mWebView.removeAllViews();
+            mWebView=null;
+            System.gc();
+            finish();
+        }
+    }
 
     private void showShareDialog(){
         Intent share_intent = new Intent();
