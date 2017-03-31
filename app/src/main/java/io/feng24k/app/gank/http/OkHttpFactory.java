@@ -1,8 +1,5 @@
 package io.feng24k.app.gank.http;
 
-
-import com.jiongbull.jlog.JLog;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -64,7 +61,6 @@ public class OkHttpFactory {
                 request = request.newBuilder()
                         .cacheControl(CacheControl.FORCE_CACHE)
                         .build();
-                JLog.d(TAG,"无网络，读取缓存");
             }
             Response originalResponse = chain.proceed(request);
             if(NetUtils.hasNetwork(GankApplication.getInstance())){
