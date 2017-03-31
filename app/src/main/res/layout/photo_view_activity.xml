@@ -6,7 +6,7 @@
               android:layout_height="match_parent">
 
 
-    <io.gank.feng24k.app.ui.widget.PhotoImageView
+    <io.feng24k.app.gank.ui.widget.PhotoImageView
         android:id="@+id/photoview_imv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

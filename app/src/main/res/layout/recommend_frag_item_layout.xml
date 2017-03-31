@@ -17,7 +17,7 @@
         android:padding="10dp"
         bind:onClick="itemOnClick">
 
-        <io.gank.feng24k.app.ui.widget.GlideImageView
+        <io.feng24k.app.gank.ui.widget.GlideImageView
             android:id="@+id/recommend_frag_item_imageview"
             android:layout_width="85dp"
             android:layout_height="85dp"

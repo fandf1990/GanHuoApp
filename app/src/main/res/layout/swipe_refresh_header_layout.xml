@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<io.gank.feng24k.app.ui.widget.swipeload.SwipeRefreshHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
+<io.feng24k.app.gank.ui.widget.swipeload.SwipeRefreshHeaderView xmlns:android="http://schemas.android.com/apk/res/android"
                                                                 android:layout_width="match_parent"
                                                                 android:layout_height="wrap_content">
 
@@ -36,4 +36,4 @@
                 android:textSize="13sp"/>
         </RelativeLayout>
     </LinearLayout>
-</io.gank.feng24k.app.ui.widget.swipeload.SwipeRefreshHeaderView>
+</io.feng24k.app.gank.ui.widget.swipeload.SwipeRefreshHeaderView>
