@@ -13,7 +13,6 @@ import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
-import android.webkit.WebResourceResponse;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
@@ -53,12 +52,6 @@ public class ResourceDetailActivity extends BaseMultiStateViewActivity implement
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 mProgressBar.setVisibility(View.GONE);
-            }
-
-            @Override
-            public void onReceivedHttpError(WebView view, WebResourceRequest request, WebResourceResponse errorResponse) {
-                super.onReceivedHttpError(view, request, errorResponse);
-                setMultiViewState(MultiStateView.VIEW_STATE_ERROR);
             }
 
             @Override
